@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mehak ❤️ Jugnu — For You</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Quicksand:wght@300;400;500;600&display=swap');
+
+  :root{
+    --plum: #180e28;
+    --violet: #2d1b4e;
+    --rose: #ff8fb3;
+    --rose-deep: #ff5f96;
+    --gold: #ffd699;
+    --cream: #fff5e6;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{
+    background: var(--plum);
+    color: var(--cream);
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  ::selection{ background: rgba(255,143,179,0.3); }
+
+  #bg-canvas{
+    position: fixed;
+    top:0; left:0;
+    width:100vw; height:100vh;
+    z-index: 0;
+    display:block;
+  }
+
+  .scene{
+    position: relative;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 8vh 6vw;
+    z-index: 2;
+  }
+
+  .eyebrow{
+    font-family:'Quicksand',sans-serif;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--gold);
+    opacity: 0.75;
+    margin-bottom: 1.4rem;
+    font-weight: 500;
+  }
+
+  h1, h2, .display{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .glow-text{
+    text-shadow: 0 0 20px rgba(255,143,179,0.55), 0 0 60px rgba(255,214,153,0.25);
+  }
+
+  /* ---------- Glass card ---------- */
+  .glass{
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 28px;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 8px 60px rgba(255,95,150,0.12), inset 0 1px 0 rgba(255,255,255,0.1);
+    padding: 3rem 2.6rem;
+    max-width: 620px;
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    height: 100vh;
+  }
+  #hero .display{
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    font-style: italic;
+    color: var(--cream);
+  }
+  #hero .names{
+    font-size: clamp(1.3rem, 4vw, 2.1rem);
+    margin-top: 1.2rem;
+    color: var(--rose);
+    letter-spacing: 0.02em;
+  }
+  .firefly-word{
+    color: var(--gold);
+    font-style: italic;
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom: 5vh;
+    left:50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,245,230,0.5);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 0.6rem;
+  }
+  .scroll-line{
+    width:1px; height: 34px;
+    background: linear-gradient(180deg, rgba(255,214,153,0.9), transparent);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse{
+    0%,100%{ transform: scaleY(1); opacity: 0.8; }
+    50%{ transform: scaleY(0.5); opacity: 0.3; }
+  }
+
+  /* ---------- LOVE WORLD ---------- */
+  #loveworld{
+    min-height: 130vh;
+    gap: 4.5rem;
+  }
+  .line-reveal{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 4.4vw, 2.6rem);
+    max-width: 780px;
+    opacity: 0;
+    transform: translateY(30px);
+    color: var(--cream);
+  }
+
+  /* ---------- MEMORY ---------- */
+  #memory{
+    min-height: 100vh;
+  }
+  .memory-frame{
+    position: relative;
+    padding: 3.4rem 3rem;
+    border: 1px solid rgba(255,214,153,0.35);
+    border-radius: 20px;
+    background: radial-gradient(ellipse at center, rgba(255,143,179,0.08), rgba(45,27,78,0.35));
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 80px rgba(255,214,153,0.15), inset 0 0 40px rgba(255,143,179,0.08);
+  }
+  .memory-frame::before, .memory-frame::after{
+    content:'';
+    position:absolute;
+    width: 26px; height: 26px;
+    border: 1.5px solid var(--gold);
+    opacity: 0.8;
+  }
+  .memory-frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .memory-frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+  .memory-date{
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5.5vw, 3.1rem);
+    font-style: italic;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(255,214,153,0.5);
+  }
+  .memory-sub{
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: var(--rose);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- FEELINGS ---------- */
+  #feelings{
+    min-height: 110vh;
+    gap: 3rem;
+  }
+  .feel-line{
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 4.6vw, 2.7rem);
+    font-style: italic;
+    max-width: 700px;
+    opacity: 0;
+  }
+
+/* ---------- PROPOSAL ---------- */
+  #proposal{
+    min-height: 100vh;
+  }
+  .heart-btn{
+    position: relative;
+    background: linear-gradient(135deg, rgba(255,95,150,0.25), rgba(255,214,153,0.15));
+    border: 1px solid rgba(255,214,153,0.55);
+    color: var(--cream);
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    padding: 1.1rem 2.8rem;
+    border-radius: 60px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(255,95,150,0.35), 0 0 80px rgba(255,214,153,0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    letter-spacing: 0.02em;
+  }
+  .heart-btn:hover{
+    transform: scale(1.06);
+    box-shadow: 0 0 60px rgba(255,95,150,0.55), 0 0 110px rgba(255,214,153,0.25);
+  }
+  .heart-btn:active{ transform: scale(0.97); }
+
+  .proposal-reveal{
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+    text-align:center;
+    background: radial-gradient(ellipse at center, rgba(45,27,78,0.55), rgba(10,6,18,0.92));
+    opacity: 0;
+    pointer-events: none;
+    padding: 6vw;
+  }
+  .proposal-reveal.active{
+    pointer-events: all;
+  }
+  .proposal-question{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 6vw, 3.4rem);
+    color: var(--cream);
+    text-shadow: 0 0 40px rgba(255,143,179,0.6);
+    max-width: 800px;
+    margin-top: 1rem;
+  }
+  .answer-btns{
+    display:flex;
+    gap: 1.2rem;
+    margin-top: 2.6rem;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  .ans-btn{
+    font-family:'Quicksand',sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 2.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.3s ease;
+  }
+  .ans-yes{
+    background: linear-gradient(135deg, var(--rose-deep), var(--gold));
+    color: #2a1020;
+    border: none;
+    box-shadow: 0 0 40px rgba(255,95,150,0.5);
+  }
+  .ans-yes:hover{ transform: scale(1.08); }
+  .ans-no{
+    background: transparent;
+    border: 1px solid rgba(255,245,230,0.3);
+    color: rgba(255,245,230,0.6);
+  }
+  .close-reveal{
+    position:absolute;
+    top: 2.4rem; right: 2.4rem;
+    color: rgba(255,245,230,0.5);
+    font-size: 1.6rem;
+    cursor: pointer;
+    background:none; border:none;
+    line-height:1;
+  }
+  .yes-message{
+    margin-top: 2rem;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3.6vw, 1.8rem);
+    color: var(--gold);
+    opacity: 0;
+  }
+
+  /* ---------- ENDING ---------- */
+  #ending{
+    min-height: 100vh;
+  }
+  #ending .display{
+    font-size: clamp(2rem, 6.5vw, 3.6rem);
+    font-style: italic;
+  }
+  #ending .sig{
+    margin-top: 1.6rem;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: var(--rose);
+    letter-spacing: 0.03em;
+  }
+  .fade-frame{
+    opacity: 0;
+  }
+#game-area{
+  overflow: hidden;
+}
+.heart-game{
+  position:absolute;
+  font-size: 24px;
+  cursor:pointer;
+  animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp{
+  from{ transform: translateY(100px); opacity:1; }
+  to{ transform: translateY(-300px); opacity:0; }
+}
+  
+  /* audio toggle */
+  #sound-toggle{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 60;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--cream);
+    transition: all 0.3s ease;
+  }
+  #sound-toggle:hover{ background: rgba(255,143,179,0.2); }
+
+  @media (max-width: 640px){
+    .glass{ padding: 2.2rem 1.6rem; border-radius: 22px; }
+    .memory-frame{ padding: 2.4rem 1.6rem; }
+    #hero .names{ margin-top: 0.9rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<button id="sound-toggle" aria-label="Toggle music">🔇</button>
+
+<!-- 1. HERO -->
+<section class="scene" id="hero">
+  <div class="eyebrow">a firefly found its light</div>
+  <h1 class="display glow-text">I Love You <span style="color:var(--rose-deep);">❤️</span></h1>
+  <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
+  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- 2. LOVE WORLD -->
+<section class="scene" id="loveworld">
+  <p class="line-reveal" data-line="1">Since the day I met you, my life feels complete.</p>
+  <p class="line-reveal" data-line="2">You are my peace, my happiness, and my everything.</p>
+  <p class="line-reveal" data-line="3">Every moment with you is special to me.</p>
+  <p class="line-reveal" data-line="4"> Ha ha pta h aapka reply hoga "Chup raho" Achha theek hai… chup ho jaata hoon 😌
+par dil ko kaise chup karu… woh to sirf aapko hi bolta hai aapke gusse me bhi pyar hi dikhta hai🤌🏻❤️ Or aapka Reply "Bhappp" hayeee🫠”.</p>
+</section>
+
+<!-- 3. MEMORY -->
+<section class="scene" id="memory">
+  <div class="memory-frame">
+    <div class="memory-date">11 January 2026</div>
+    <div class="memory-sub">The day my heart found you ❤️</div>
+  </div>
+</section>
+
+<!-- 4. FEELINGS -->
+<section class="scene" id="feelings">
+  <p class="feel-line" data-line="1">You are the reason behind my smile.</p>
+  <p class="feel-line" data-line="2">I feel lucky to have you in my life.</p>
+</section>
+
+<!-- 5. PROPOSAL -->
+<section class="scene" id="proposal">
+  <div class="glass">
+    <div class="eyebrow">one question, always</div>
+    <h2 class="display" style="font-size:clamp(1.6rem,4.5vw,2.4rem); font-style:italic; margin-bottom:1.8rem;">Every star tonight is a little braver because of you.</h2>
+    <button class="heart-btn" id="open-heart">Open My Heart ❤️</button>
+  </div>
+</section>
+
+<!-- 6. ENDING -->
+<section class="scene" id="ending">
+  <div class="fade-frame" id="ending-frame">
+    <div class="eyebrow">always, and after always</div>
+    <h2 class="display glow-text">I will always love you,</h2>
+    <div class="sig">Mehak <span class="firefly-word">(Jugnu)</span> ❤️✨</div>
+  </div>
+</section>
+  
+  <section class="scene" id="hero">
+  <div class="eyebrow">Aditya ❤️ Jugnu</div>
+  <h1 class="display glow-text">I Love You ❤️</h1>
+  <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
+</section>
+
+  <!-- GAME SECTION -->
+<section class="scene" id="game">
+  <div class="glass">
+    <div class="eyebrow">a little game for you ❤️</div>
+    <h2 class="display" style="font-size:2rem;">Catch My Love 💞</h2>
+    <p style="margin:1rem 0;">Tap the hearts ❤️</p>
+
+    <div id="game-area" style="position:relative; height:300px;"></div>
+    <div id="score" style="margin-top:1rem;">Score: 0</div>
+  </div>
+</section>
+  
+<!-- PROPOSAL REVEAL OVERLAY -->
+<div class="proposal-reveal" id="proposal-overlay">
+  <button class="close-reveal" id="close-reveal" aria-label="Close">✕</button>
+  <div class="proposal-question">Will you stay with me forever? 💍</div>
+  <div class="answer-btns" id="answer-btns">
+    <button class="ans-btn ans-yes" id="ans-yes">Yes, forever ❤️</button>
+    <button class="ans-btn ans-no" id="ans-no">Ask me softly again</button>
+  </div>
+  <div class="yes-message" id="yes-message">Then my firefly has finally come home. ✨</div>
+</div>
+
+<audio id="bg-music" loop preload="none">
+  <source src="ssvid.net--Anuv-Jain-Arz-Kiya-Hai-Official-Lyrical-Video_128kbps.m4a.mp3" type="audio/mpeg">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   THREE.JS SCENE — space, particles, firefly, heart constellation
+   ============================================================ */
+const canvas = document.getElementById('bg-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x180e28, 0.012);
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 3000);
+camera.position.set(0, 0, 60);
+
+// Lighting — soft cinematic, warm rose + gold rim
+const ambient = new THREE.AmbientLight(0x2d1b4e, 1.2);
+scene.add(ambient);
+const roseLight = new THREE.PointLight(0xff5f96, 2.2, 400);
+roseLight.position.set(30, 20, 40);
+scene.add(roseLight);
+const goldLight = new THREE.PointLight(0xffd699, 1.6, 400);
+goldLight.position.set(-40, -10, 20);
+scene.add(goldLight);
+
+/* ---------- Starfield ---------- */
+function makeStars(count, spread, size, color, opacity){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    positions[i*3] = (Math.random()-0.5)*spread;
+    positions[i*3+1] = (Math.random()-0.5)*spread;
+    positions[i*3+2] = (Math.random()-0.5)*spread - 100;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  const mat = new THREE.PointsMaterial({ color, size, transparent:true, opacity, depthWrite:false, blending: THREE.AdditiveBlending });
+  return new THREE.Points(geo, mat);
+}
+const starsFar = makeStars(2200, 900, 0.9, 0xfff5e6, 0.55);
+const starsMid = makeStars(700, 500, 1.6, 0xffd699, 0.7);
+const starsNear = makeStars(200, 260, 2.4, 0xff8fb3, 0.85);
+scene.add(starsFar, starsMid, starsNear);
+
+/* ---------- Floating glow particles (light dust) ---------- */
+const dustGeo = new THREE.BufferGeometry();
+const dustCount = 500;
+const dustPos = new Float32Array(dustCount*3);
+const dustSpeeds = new Float32Array(dustCount);
+for(let i=0;i<dustCount;i++){
+  dustPos[i*3] = (Math.random()-0.5)*220;
+  dustPos[i*3+1] = (Math.random()-0.5)*220;
+  dustPos[i*3+2] = (Math.random()-0.5)*400 - 50;
+  dustSpeeds[i] = 0.02 + Math.random()*0.05;
+}
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos,3));
+const dustMat = new THREE.PointsMaterial({
+  color: 0xffe0c2, size: 1.1, transparent:true, opacity:0.5,
+  blending: THREE.AdditiveBlending, depthWrite:false
+});
+const dust = new THREE.Points(dustGeo, dustMat);
+scene.add(dust);
+
+/* ---------- Floating 3D hearts ---------- */
+function heartShape(){
+  const shape = new THREE.Shape();
+  shape.moveTo(0, 0.5);
+  shape.bezierCurveTo(0, 0.9, -0.5, 1.2, -1, 0.9);
+  shape.bezierCurveTo(-1.6, 0.55, -1.5, -0.2, -1, -0.7);
+  shape.bezierCurveTo(-0.6, -1.1, -0.2, -1.3, 0, -1.6);
+  shape.bezierCurveTo(0.2, -1.3, 0.6, -1.1, 1, -0.7);
+  shape.bezierCurveTo(1.5, -0.2, 1.6, 0.55, 1, 0.9);
+  shape.bezierCurveTo(0.5, 1.2, 0, 0.9, 0, 0.5);
+  return shape;
+}
+const heartGeo = new THREE.ExtrudeGeometry(heartShape(), { depth: 0.35, bevelEnabled:true, bevelThickness:0.08, bevelSize:0.08, bevelSegments:3, curveSegments: 12 });
+heartGeo.scale(0.5,0.5,0.5);
+
+const heartMat = new THREE.MeshStandardMaterial({
+  color: 0xff5f96, emissive: 0xff2f6d, emissiveIntensity: 0.55,
+  metalness: 0.3, roughness: 0.35, transparent:true, opacity: 0.92
+});
+
+const hearts = [];
+const HEART_COUNT = 26;
+for(let i=0;i<HEART_COUNT;i++){
+  const m = new THREE.Mesh(heartGeo, heartMat.clone());
+  m.material.color.offsetHSL((Math.random()-0.5)*0.05, 0, (Math.random()-0.5)*0.1);
+  const scale = 0.5 + Math.random()*1.1;
+  m.scale.setScalar(scale);
+  m.position.set(
+    (Math.random()-0.5)*90,
+    (Math.random()-0.5)*70,
+    (Math.random()-0.5)*180 - 20
+  );
+  m.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
+  m.userData = {
+    baseY: m.position.y,
+    floatSpeed: 0.3 + Math.random()*0.5,
+    floatOffset: Math.random()*Math.PI*2,
+    rotSpeed: (Math.random()-0.5)*0.25,
+    baseX: m.position.x,
+    baseZ: m.position.z
+  };
+  hearts.push(m);
+  scene.add(m);
+}
+
+/* ---------- The Firefly (Jugnu) — signature element ---------- */
+const fireflyGroup = new THREE.Group();
+const fireflyCore = new THREE.Mesh(
+  new THREE.SphereGeometry(0.5, 16, 16),
+  new THREE.MeshBasicMaterial({ color: 0xfff2c0 })
+);
+fireflyGroup.add(fireflyCore);
+const fireflyGlow = new THREE.PointLight(0xffe9a8, 3.5, 30);
+fireflyGroup.add(fireflyGlow);
+// soft sprite halo
+const haloCanvas = document.createElement('canvas');
+haloCanvas.width = 128; haloCanvas.height = 128;
+const hctx = haloCanvas.getContext('2d');
+const grad = hctx.createRadialGradient(64,64,0,64,64,64);
+grad.addColorStop(0, 'rgba(255,240,200,0.9)');
+grad.addColorStop(0.4, 'rgba(255,180,200,0.4)');
+grad.addColorStop(1, 'rgba(255,180,200,0)');
+hctx.fillStyle = grad;
+hctx.fillRect(0,0,128,128);
+const haloTex = new THREE.CanvasTexture(haloCanvas);
+const haloMat = new THREE.SpriteMaterial({ map: haloTex, transparent:true, blending: THREE.AdditiveBlending, depthWrite:false });
+const halo = new THREE.Sprite(haloMat);
+halo.scale.set(6,6,1);
+fireflyGroup.add(halo);
+fireflyGroup.position.set(0, 0, 20);
+scene.add(fireflyGroup);
+
+// Firefly trail (glowing dust it leaves behind)
+const TRAIL_LEN = 60;
+const trailGeo = new THREE.BufferGeometry();
+const trailPos = new Float32Array(TRAIL_LEN*3);
+trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos,3));
+const trailMat = new THREE.PointsMaterial({ color:0xffe0a0, size:0.9, transparent:true, opacity:0.55, blending: THREE.AdditiveBlending, depthWrite:false });
+const trail = new THREE.Points(trailGeo, trailMat);
+scene.add(trail);
+const trailHistory = [];
+
+/* ---------- Heart constellation (revealed at proposal) ---------- */
+function heartPoints(n){
+  const pts = [];
+  for(let i=0;i<n;i++){
+    const t = (i/n)*Math.PI*2;
+    const x = 16*Math.pow(Math.sin(t),3);
+    const y = 13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+    pts.push(new THREE.Vector3(x*0.9, y*0.9, 0));
+  }
+  return pts;
+}
+const constellationPts = heartPoints(80);
+const constGeo = new THREE.BufferGeometry().setFromPoints(constellationPts);
+const constMat = new THREE.PointsMaterial({ color:0xffd699, size:1.6, transparent:true, opacity:0, blending: THREE.AdditiveBlending, depthWrite:false });
+const constellation = new THREE.Points(constGeo, constMat);
+constellation.position.set(0, 8, -10);
+scene.add(constellation);
+
+// connecting lines for constellation
+const lineGeo = new THREE.BufferGeometry().setFromPoints(constellationPts.concat([constellationPts[0]]));
+const lineMat = new THREE.LineBasicMaterial({ color: 0xff8fb3, transparent:true, opacity:0 });
+const constLine = new THREE.Line(lineGeo, lineMat);
+constLine.position.copy(constellation.position);
+scene.add(constLine);
+
+/* ============================================================
+   Camera path & scroll-driven movement (parallax through space)
+   ============================================================ */
+let scrollProgress = 0;
+let targetScrollProgress = 0;
+
+const cameraPath = [
+  { z: 60, y: 0,  x: 0
