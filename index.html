@@ -1,465 +1,172 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Mehak</title>
-<style>
-  :root{
-    --navy-deep:#050814;
-    --navy:#0a1128;
-    --gold:#e8c974;
-    --gold-soft:#f3e2ac;
-    --silver:#c9d3e8;
-    --silver-dim:#5b6790;
-    --rose:#e8a4a0;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--navy-deep);
-    color:var(--silver);
-    font-family:'EB Garamond', Georgia, serif;
-    overflow-x:hidden;
-  }
-  @font-face{
-    font-family:'EB Garamond';
-    src:local('EB Garamond');
-  }
-  #canvas-bg{
-    position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
-    z-index:0;
-  }
-  .content{
-    position:relative;
-    z-index:1;
-  }
-  .eyebrow{
-    font-family:'Cormorant Garamond', Georgia, serif;
-    letter-spacing:0.35em;
-    text-transform:uppercase;
-    font-size:0.7rem;
-    color:var(--gold);
-    opacity:0.75;
-  }
-  section{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:6vh 6vw;
-    position:relative;
-  }
-  h1,h2{
-    font-weight:400;
-    line-height:1.15;
-  }
-  .hero-title{
-    font-size:clamp(2.2rem, 6vw, 4.5rem);
-    color:var(--gold-soft);
-    letter-spacing:0.02em;
-    text-shadow:0 0 40px rgba(232,201,116,0.25);
-  }
-  .hero-sub{
-    margin-top:1.4rem;
-    font-size:clamp(1rem, 1.6vw, 1.3rem);
-    color:var(--silver-dim);
-    font-style:italic;
-  }
-  .scroll-hint{
-    position:absolute;
-    bottom:6vh;
-    font-size:0.75rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--silver-dim);
-    animation:pulse 2.5s ease-in-out infinite;
-  }
-  @keyframes pulse{
-    0%,100%{opacity:0.35;transform:translateY(0);}
-    50%{opacity:0.9;transform:translateY(6px);}
-  }
-  .chapter{
-    max-width:640px;
-  }
-  .chapter-num{
-    font-size:0.8rem;
-    color:var(--gold);
-    letter-spacing:0.3em;
-    margin-bottom:1.2rem;
-    opacity:0;
-    transform:translateY(10px);
-    transition:opacity 1s ease, transform 1s ease;
-  }
-  .chapter-title{
-    font-size:clamp(1.8rem, 4vw, 3rem);
-    color:var(--gold-soft);
-    margin-bottom:1.5rem;
-    opacity:0;
-    transform:translateY(20px);
-    transition:opacity 1.1s ease 0.15s, transform 1.1s ease 0.15s;
-  }
-  .chapter-text{
-    font-size:clamp(1rem, 1.5vw, 1.25rem);
-    line-height:1.9;
-    color:var(--silver);
-    opacity:0;
-    transform:translateY(20px);
-    transition:opacity 1.1s ease 0.3s, transform 1.1s ease 0.3s;
-  }
-  .chapter.visible .chapter-num,
-  .chapter.visible .chapter-title,
-  .chapter.visible .chapter-text{
-    opacity:1;
-    transform:translateY(0);
-  }
-  .divider{
-    width:1px;
-    height:80px;
-    background:linear-gradient(to bottom, transparent, var(--silver-dim), transparent);
-    margin:3rem auto 0;
-  }
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Aditya &amp; Jugnu — For Mehak</title>
 
-  /* Final proposal section */
-  #finale{
-    position:relative;
-  }
-  .finale-inner{
-    max-width:600px;
-  }
-  .question{
-    font-size:clamp(2rem, 5.5vw, 3.6rem);
-    color:var(--gold-soft);
-    margin-bottom:2.5rem;
-    text-shadow:0 0 50px rgba(232,201,116,0.3);
-  }
-  .name-highlight{
-    color:var(--rose);
-  }
-  .btn-row{
-    display:flex;
-    gap:1.5rem;
-    justify-content:center;
-    flex-wrap:wrap;
-    position:relative;
-    min-height:120px;
-    align-items:center;
-  }
-  button{
-    font-family:'EB Garamond', Georgia, serif;
-    font-size:1.1rem;
-    padding:0.9rem 2.4rem;
-    border-radius:2px;
-    cursor:pointer;
-    letter-spacing:0.04em;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  #yes-btn{
-    background:linear-gradient(135deg, var(--gold), #cfa84f);
-    color:var(--navy-deep);
-    border:none;
-    font-weight:600;
-    box-shadow:0 8px 30px rgba(232,201,116,0.25);
-  }
-  #yes-btn:hover{
-    transform:scale(1.06);
-    box-shadow:0 12px 40px rgba(232,201,116,0.4);
-  }
-  #no-btn{
-    background:transparent;
-    border:1px solid var(--silver-dim);
-    color:var(--silver-dim);
-    position:relative;
-    transition:transform 0.15s ease, left 0.15s ease, top 0.15s ease;
-  }
-  #celebration{
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    gap:1.2rem;
-  }
-  #celebration.show{
-    display:flex;
-  }
-  #celebration .question{
-    margin-bottom:0.5rem;
-  }
-  .final-note{
-    font-size:1rem;
-    color:var(--silver-dim);
-    font-style:italic;
-    max-width:420px;
-  }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Italiana&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  ::selection{
-    background:var(--gold);
-    color:var(--navy-deep);
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="canvas-bg"></canvas>
+<!-- SVG defs: gradients + reusable heart path -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8b978"/>
+      <stop offset="100%" stop-color="#e8547e"/>
+    </linearGradient>
+  </defs>
+</svg>
 
-<div class="content">
+<div id="grain"></div>
+<div id="vignette"></div>
 
-  <section id="hero">
-    <div class="eyebrow">a story, written in the sky</div>
-    <h1 class="hero-title">For Mehak</h1>
-    <p class="hero-sub">Every star above has been waiting for this.</p>
-    <div class="scroll-hint">scroll to begin ↓</div>
-  </section>
-
-  <section>
-    <div class="chapter" data-chapter="1">
-      <div class="chapter-num">CHAPTER ONE</div>
-      <h2 class="chapter-title">The First Star</h2>
-      <p class="chapter-text">Somewhere in the noise of an ordinary day, one star lit up brighter than the rest. I didn't know it yet, but that was the day you walked in — and the sky quietly rearranged itself around you.</p>
-    </div>
-    <div class="divider"></div>
-  </section>
-
-  <section>
-    <div class="chapter" data-chapter="2">
-      <div class="chapter-num">CHAPTER TWO</div>
-      <h2 class="chapter-title">The Constellation Forms</h2>
-      <p class="chapter-text">One star became two. Two became a shape. Every conversation, every silly argument, every 2 AM call — another point of light, quietly joining the pattern. I didn't plan this constellation. You built it, one moment at a time.</p>
-    </div>
-    <div class="divider"></div>
-  </section>
-
-  <section>
-    <div class="chapter" data-chapter="3">
-      <div class="chapter-num">CHAPTER THREE</div>
-      <h2 class="chapter-title">The Whole Sky, Rearranged</h2>
-      <p class="chapter-text">Now when I look up, I don't see stars anymore. I see us — every high, every hard day, every reason I stayed. The whole sky belongs to a story that only makes sense with you in it.</p>
-    </div>
-    <div class="divider"></div>
-  </section>
-
-  <section id="finale">
-    <div class="finale-inner">
-      <div id="ask-block">
-        <p class="eyebrow">final chapter</p>
-        <h2 class="question">Mehak, will you be my <span class="name-highlight">forever constellation</span>?</h2>
-        <div class="btn-row">
-          <button id="yes-btn">Yes, always</button>
-          <button id="no-btn">Not yet</button>
-        </div>
-      </div>
-      <div id="celebration">
-        <h2 class="question">The sky just got brighter. ✨</h2>
-        <p class="final-note">Every star up there is proud of us. I love you, Mehak — today, and every night after this one.</p>
-      </div>
-    </div>
-  </section>
-
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="loader-mark">
+    <svg viewBox="0 0 56 56">
+      <path class="lp" d="M28 51 C28 51 4 35 4 18 C4 9 11 3 19 3 C23.5 3 27 5.5 28 10 C29 5.5 32.5 3 37 3 C45 3 52 9 52 18 C52 35 28 51 28 51 Z"/>
+    </svg>
+  </div>
+  <p class="loader-label">a little universe, loading</p>
 </div>
 
-<script>
-// ---------- Starfield + constellation canvas ----------
-const canvas = document.getElementById('canvas-bg');
-const ctx = canvas.getContext('2d');
-let w, h;
-function resize(){
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
+<!-- ============ AMBIENT AUDIO ============ -->
+<audio id="bg-music" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+</audio>
+<audio id="chime-sound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3" type="audio/mpeg">
+</audio>
+<audio id="yes-sound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_a2d81f5d3a.mp3" type="audio/mpeg">
+</audio>
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<button id="sound-toggle" aria-label="Toggle music">
+  <svg id="sound-on-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.28v8.56c1.23-.99 2-2.51 2-4.28zM14 4.45v2.06a5.5 5.5 0 0 1 0 10.98v2.06A7.5 7.5 0 0 0 14 4.45z"/></svg>
+  <svg id="sound-off-icon" viewBox="0 0 24 24" width="18" height="18" style="display:none"><path fill="currentColor" d="M16.5 12a4.5 4.5 0 0 0-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.94 8.94 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+</button>
 
-// Background ambient stars
-const STAR_COUNT = 220;
-const stars = [];
-for(let i=0;i<STAR_COUNT;i++){
-  stars.push({
-    x: Math.random()*w,
-    y: Math.random()*h,
-    r: Math.random()*1.4 + 0.3,
-    baseAlpha: Math.random()*0.6 + 0.2,
-    twinkleSpeed: Math.random()*0.02 + 0.005,
-    phase: Math.random()*Math.PI*2
-  });
-}
+<canvas id="bg-canvas"></canvas>
+<div class="bg-scrim"></div>
+<div id="ripple-layer"></div>
 
-// Constellation points that build up as user scrolls through chapters
-// Positions are relative (0-1) so they scale with viewport
-const constellationPoints = [
-  {x:0.20, y:0.30}, {x:0.32, y:0.22}, {x:0.45, y:0.35},
-  {x:0.58, y:0.20}, {x:0.68, y:0.32}, {x:0.78, y:0.18},
-  {x:0.50, y:0.55}, {x:0.35, y:0.60}, {x:0.65, y:0.62},
-  {x:0.50, y:0.75}
-];
-const connections = [[0,1],[1,2],[2,3],[3,4],[4,5],[2,6],[6,7],[6,8],[6,9]];
+<!-- ============ MAIN CONTENT ============ -->
+<main id="content">
 
-let revealProgress = 0; // 0 to 1, controls how much constellation is drawn
+  <!-- HERO -->
+  <section class="section hero" id="hero">
+    <div class="hero-frame"></div>
+    <p class="hero-mark">a story, written in starlight</p>
+    <h1 class="hero-title">Aditya <span class="amp">&amp;</span> Jugnu</h1>
+    <p class="hero-sub">I love you, <em>Mehak</em></p>
+    <div class="hero-rule"></div>
+    <div class="scroll-cue">
+      <span>begin our story</span>
+      <div class="scroll-line"><div class="scroll-line-fill"></div></div>
+    </div>
+  </section>
 
-let time = 0;
-function draw(){
-  time += 1;
-  ctx.clearRect(0,0,w,h);
+  <!-- LOVE STORY -->
+  <section class="section story" id="story">
+    <div class="story-inner">
+      <p class="story-line" data-line>Since the 11th of January, 2026,</p>
+      <p class="story-line" data-line>my life changed forever.</p>
+      <div class="story-divider"></div>
+      <p class="story-line story-line--accent" data-line>You are my happiness,</p>
+      <p class="story-line story-line--accent" data-line>my peace, my everything.</p>
+      <p class="story-line story-line--small" data-line>Every firefly I see now, I think of you —<br>small, glowing, impossible to look away from.</p>
+    </div>
+  </section>
 
-  // ambient stars
-  stars.forEach(s=>{
-    const tw = reduceMotion ? s.baseAlpha : s.baseAlpha + Math.sin(time*s.twinkleSpeed + s.phase)*0.25;
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(233,225,255,${Math.max(0,tw)})`;
-    ctx.fill();
-  });
+  <!-- MEMORY CARD -->
+  <section class="section memory" id="memory">
+    <p class="kicker">the beginning</p>
+    <div class="memory-card-wrap">
+      <div class="memory-card" id="memory-card">
+        <div class="memory-card-shine"></div>
+        <span class="memory-date-badge">11 · 01 · 2026</span>
+        <h2 class="memory-title">The day my heart<br>found you</h2>
+        <p class="memory-text">A date I'll never let go of. Not because it's marked on a calendar — but because it's marked on me.</p>
+        <span class="memory-heart"><svg viewBox="0 0 32 29"><path d="M16 28.6 C16 28.6 1.6 19.6 1.6 9.8 C1.6 4.6 5.6 1 10.2 1 C13 1 15 2.4 16 4.6 C17 2.4 19 1 21.8 1 C26.4 1 30.4 4.6 30.4 9.8 C30.4 19.6 16 28.6 16 28.6 Z" fill="#e8547e"/></svg></span>
+      </div>
+    </div>
+  </section>
 
-  // constellation reveal
-  const pts = constellationPoints.map(p=>({x:p.x*w, y:p.y*h}));
-  const totalLines = connections.length;
-  const linesToShow = revealProgress * totalLines;
+  <!-- MINI GAME -->
+  <section class="section game" id="game">
+    <p class="kicker">catch a little love</p>
+    <h2 class="game-title">Catch my hearts, Mehak</h2>
+    <p class="game-sub">Tap every heart before it drifts into the night.</p>
 
-  connections.forEach(([a,b], idx)=>{
-    if(idx < Math.floor(linesToShow)){
-      drawLine(pts[a], pts[b], 1);
-    } else if(idx === Math.floor(linesToShow)){
-      drawLine(pts[a], pts[b], linesToShow - idx);
-    }
-  });
+    <div class="game-hud">
+      <div class="game-score">Score — <span id="score-val">0</span> / <span id="score-target">15</span></div>
+      <button id="game-start" class="btn btn--ghost"><span>Start</span></button>
+    </div>
 
-  // draw points that are "activated"
-  const pointsActive = Math.min(constellationPoints.length, Math.ceil(revealProgress * constellationPoints.length) + 1);
-  pts.forEach((p, idx)=>{
-    if(idx < pointsActive){
-      const glow = reduceMotion ? 1 : 0.7 + Math.sin(time*0.03 + idx)*0.3;
-      const grad = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,14);
-      grad.addColorStop(0, `rgba(232,201,116,${0.9*glow})`);
-      grad.addColorStop(1, 'rgba(232,201,116,0)');
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,14,0,Math.PI*2);
-      ctx.fillStyle = grad;
-      ctx.fill();
+    <div class="game-stage" id="game-stage">
+      <div class="game-unlock" id="game-unlock">
+        <p>You have collected all my love</p>
+      </div>
+    </div>
+  </section>
 
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,2.2,0,Math.PI*2);
-      ctx.fillStyle = '#f3e2ac';
-      ctx.fill();
-    }
-  });
+  <!-- PRANK -->
+  <section class="section prank" id="prank">
+    <p class="kicker">just one question</p>
+    <h2 class="prank-title">Do you know how much I love you?</h2>
+    <p class="prank-msg" id="prank-msg">&nbsp;</p>
+    <div class="prank-buttons">
+      <button class="btn btn--primary" id="prank-yes"><span>Yes, tell me</span></button>
+      <button class="btn btn--outline" id="prank-no"><span>No</span></button>
+    </div>
+  </section>
 
-  requestAnimationFrame(draw);
-}
-function drawLine(p1, p2, t){
-  const x2 = p1.x + (p2.x - p1.x)*t;
-  const y2 = p1.y + (p2.y - p1.y)*t;
-  ctx.beginPath();
-  ctx.moveTo(p1.x, p1.y);
-  ctx.lineTo(x2, y2);
-  ctx.strokeStyle = 'rgba(232,201,116,0.5)';
-  ctx.lineWidth = 1.2;
-  ctx.stroke();
-}
-draw();
+  <!-- PROPOSAL -->
+  <section class="section proposal" id="proposal">
+    <div class="proposal-pre" id="proposal-pre">
+      <p class="kicker">the real question</p>
+      <h2 class="proposal-title">There's something<br>I've been meaning to ask.</h2>
+      <button class="btn btn--glow" id="open-heart-btn"><span>Open my heart</span></button>
+    </div>
 
-// ---------- Scroll-driven reveal ----------
-const chapters = document.querySelectorAll('.chapter');
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
-  });
-}, {threshold:0.4});
-chapters.forEach(c=>observer.observe(c));
+    <div class="proposal-scene" id="proposal-scene">
+      <canvas id="heart-canvas"></canvas>
+      <div class="proposal-question" id="proposal-question">
+        <h2>Will you stay with me<br>forever, Mehak?</h2>
+        <div class="proposal-buttons">
+          <button class="btn btn--primary btn--large" id="btn-yes"><span>Yes, forever</span></button>
+          <button class="btn btn--outline" id="btn-no"><span>No</span></button>
+        </div>
+      </div>
+      <div class="proposal-success" id="proposal-success">
+        <div class="success-burst" id="success-burst"></div>
+        <h2>She said yes.</h2>
+        <p>Forever starts now, my Jugnu</p>
+      </div>
+    </div>
+  </section>
 
-function updateConstellationProgress(){
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const finaleEl = document.getElementById('finale');
-  const finaleTop = finaleEl.offsetTop;
-  // progress builds from top of page to start of finale section
-  let progress = scrollTop / (finaleTop - window.innerHeight*0.5);
-  progress = Math.max(0, Math.min(1, progress));
-  revealProgress = progress;
-}
-window.addEventListener('scroll', updateConstellationProgress);
-updateConstellationProgress();
+  <!-- ENDING -->
+  <section class="section ending" id="ending">
+    <p class="ending-mark">always, and after always</p>
+    <p class="ending-glow-text">Forever yours,</p>
+    <h2 class="ending-title">Aditya <span class="amp">&amp;</span> Jugnu</h2>
+    <p class="ending-sub">11 · 01 · 2026 — AND EVERY DAY AFTER</p>
+    <div class="ending-rule"></div>
+  </section>
 
-// ---------- "Not yet" dodges, "Yes" celebrates ----------
-const noBtn = document.getElementById('no-btn');
-const yesBtn = document.getElementById('yes-btn');
-const btnRow = document.querySelector('.btn-row');
-const askBlock = document.getElementById('ask-block');
-const celebration = document.getElementById('celebration');
+</main>
 
-let dodgeCount = 0;
-function dodge(){
-  const rowRect = btnRow.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
-  const maxX = rowRect.width - btnRect.width - 10;
-  const maxY = rowRect.height - btnRect.height - 10;
-  const newX = Math.random()*maxX - maxX/2;
-  const newY = (Math.random()*maxY - maxY/2);
-  noBtn.style.position = 'relative';
-  noBtn.style.left = newX + 'px';
-  noBtn.style.top = newY + 'px';
-  dodgeCount++;
-  const messages = ["Not yet", "Try again", "Nope!", "Too slow", "Almost!", "Nice try", "Keep trying", "Still no", "So close", "Persistent, huh?"];
-  noBtn.textContent = messages[Math.min(dodgeCount, messages.length-1)];
-}
-noBtn.addEventListener('mouseenter', dodge);
-noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); dodge(); });
-
-yesBtn.addEventListener('click', ()=>{
-  askBlock.style.transition = 'opacity 0.6s ease';
-  askBlock.style.opacity = '0';
-  setTimeout(()=>{
-    askBlock.style.display = 'none';
-    celebration.classList.add('show');
-    launchConfettiStars();
-  }, 600);
-});
-
-// Small celebratory burst of gold particles using the same canvas
-let confettiParticles = [];
-function launchConfettiStars(){
-  for(let i=0;i<80;i++){
-    confettiParticles.push({
-      x: w/2 + (Math.random()-0.5)*100,
-      y: h*0.6,
-      vx: (Math.random()-0.5)*6,
-      vy: (Math.random()-1.5)*6,
-      life: 1,
-      r: Math.random()*2+1
-    });
-  }
-}
-const originalDraw = draw;
-function drawConfetti(){
-  confettiParticles.forEach(p=>{
-    p.x += p.vx;
-    p.y += p.vy;
-    p.vy += 0.08;
-    p.life -= 0.012;
-    if(p.life > 0){
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(243,226,172,${p.life})`;
-      ctx.fill();
-    }
-  });
-  confettiParticles = confettiParticles.filter(p=>p.life > 0);
-}
-// hook confetti into render loop
-(function loopConfetti(){
-  drawConfetti();
-  requestAnimationFrame(loopConfetti);
-})();
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="scene.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
