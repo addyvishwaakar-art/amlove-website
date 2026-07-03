@@ -2,866 +2,155 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mehak ❤️ Jugnu — For You</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Quicksand:wght@300;400;500;600&display=swap');
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Aditya ❤ Jugnu — For Mehak</title>
 
-  :root{
-    --plum: #180e28;
-    --violet: #2d1b4e;
-    --rose: #ff8fb3;
-    --rose-deep: #ff5f96;
-    --gold: #ffd699;
-    --cream: #fff5e6;
-  }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  *{ margin:0; padding:0; box-sizing:border-box; }
-  html,body{
-    background: var(--plum);
-    color: var(--cream);
-    font-family: 'Quicksand', sans-serif;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-  ::selection{ background: rgba(255,143,179,0.3); }
-
-  #bg-canvas{
-    position: fixed;
-    top:0; left:0;
-    width:100vw; height:100vh;
-    z-index: 0;
-    display:block;
-  }
-
-  .scene{
-    position: relative;
-    min-height: 100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding: 8vh 6vw;
-    z-index: 2;
-  }
-
-  .eyebrow{
-    font-family:'Quicksand',sans-serif;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    color: var(--gold);
-    opacity: 0.75;
-    margin-bottom: 1.4rem;
-    font-weight: 500;
-  }
-
-  h1, h2, .display{
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    line-height: 1.15;
-  }
-
-  .glow-text{
-    text-shadow: 0 0 20px rgba(255,143,179,0.55), 0 0 60px rgba(255,214,153,0.25);
-  }
-
-  /* ---------- Glass card ---------- */
-  .glass{
-    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 28px;
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    box-shadow: 0 8px 60px rgba(255,95,150,0.12), inset 0 1px 0 rgba(255,255,255,0.1);
-    padding: 3rem 2.6rem;
-    max-width: 620px;
-  }
-
-  /* ---------- HERO ---------- */
-  #hero{
-    height: 100vh;
-  }
-  #hero .display{
-    font-size: clamp(2.6rem, 8vw, 5.2rem);
-    font-style: italic;
-    color: var(--cream);
-  }
-  #hero .names{
-    font-size: clamp(1.3rem, 4vw, 2.1rem);
-    margin-top: 1.2rem;
-    color: var(--rose);
-    letter-spacing: 0.02em;
-  }
-  .firefly-word{
-    color: var(--gold);
-    font-style: italic;
-  }
-  .scroll-cue{
-    position:absolute;
-    bottom: 5vh;
-    left:50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(255,245,230,0.5);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap: 0.6rem;
-  }
-  .scroll-line{
-    width:1px; height: 34px;
-    background: linear-gradient(180deg, rgba(255,214,153,0.9), transparent);
-    animation: scrollpulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollpulse{
-    0%,100%{ transform: scaleY(1); opacity: 0.8; }
-    50%{ transform: scaleY(0.5); opacity: 0.3; }
-  }
-
-  /* ---------- LOVE WORLD ---------- */
-  #loveworld{
-    min-height: 130vh;
-    gap: 4.5rem;
-  }
-  .line-reveal{
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.5rem, 4.4vw, 2.6rem);
-    max-width: 780px;
-    opacity: 0;
-    transform: translateY(30px);
-    color: var(--cream);
-  }
-
-  /* ---------- MEMORY ---------- */
-  #memory{
-    min-height: 100vh;
-  }
-  .memory-frame{
-    position: relative;
-    padding: 3.4rem 3rem;
-    border: 1px solid rgba(255,214,153,0.35);
-    border-radius: 20px;
-    background: radial-gradient(ellipse at center, rgba(255,143,179,0.08), rgba(45,27,78,0.35));
-    backdrop-filter: blur(14px);
-    box-shadow: 0 0 80px rgba(255,214,153,0.15), inset 0 0 40px rgba(255,143,179,0.08);
-  }
-  .memory-frame::before, .memory-frame::after{
-    content:'';
-    position:absolute;
-    width: 26px; height: 26px;
-    border: 1.5px solid var(--gold);
-    opacity: 0.8;
-  }
-  .memory-frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
-  .memory-frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
-  .memory-date{
-    font-family:'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 5.5vw, 3.1rem);
-    font-style: italic;
-    color: var(--gold);
-    text-shadow: 0 0 30px rgba(255,214,153,0.5);
-  }
-  .memory-sub{
-    margin-top: 1rem;
-    font-size: 1.05rem;
-    color: var(--rose);
-    letter-spacing: 0.02em;
-  }
-
-  /* ---------- FEELINGS ---------- */
-  #feelings{
-    min-height: 110vh;
-    gap: 3rem;
-  }
-  .feel-line{
-    font-family:'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 4.6vw, 2.7rem);
-    font-style: italic;
-    max-width: 700px;
-    opacity: 0;
-  }
-
-  /* ---------- PROPOSAL ---------- */
-  #proposal{
-    min-height: 100vh;
-  }
-  .heart-btn{
-    position: relative;
-    background: linear-gradient(135deg, rgba(255,95,150,0.25), rgba(255,214,153,0.15));
-    border: 1px solid rgba(255,214,153,0.55);
-    color: var(--cream);
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
-    padding: 1.1rem 2.8rem;
-    border-radius: 60px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 40px rgba(255,95,150,0.35), 0 0 80px rgba(255,214,153,0.15);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    letter-spacing: 0.02em;
-  }
-  .heart-btn:hover{
-    transform: scale(1.06);
-    box-shadow: 0 0 60px rgba(255,95,150,0.55), 0 0 110px rgba(255,214,153,0.25);
-  }
-  .heart-btn:active{ transform: scale(0.97); }
-
-  .proposal-reveal{
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction: column;
-    text-align:center;
-    background: radial-gradient(ellipse at center, rgba(45,27,78,0.55), rgba(10,6,18,0.92));
-    opacity: 0;
-    pointer-events: none;
-    padding: 6vw;
-  }
-  .proposal-reveal.active{
-    pointer-events: all;
-  }
-  .proposal-question{
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.8rem, 6vw, 3.4rem);
-    color: var(--cream);
-    text-shadow: 0 0 40px rgba(255,143,179,0.6);
-    max-width: 800px;
-    margin-top: 1rem;
-  }
-  .answer-btns{
-    display:flex;
-    gap: 1.2rem;
-    margin-top: 2.6rem;
-    flex-wrap: wrap;
-    justify-content:center;
-  }
-  .ans-btn{
-    font-family:'Quicksand',sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.85rem 2.2rem;
-    border-radius: 40px;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    transition: all 0.3s ease;
-  }
-  .ans-yes{
-    background: linear-gradient(135deg, var(--rose-deep), var(--gold));
-    color: #2a1020;
-    border: none;
-    box-shadow: 0 0 40px rgba(255,95,150,0.5);
-  }
-  .ans-yes:hover{ transform: scale(1.08); }
-  .ans-no{
-    background: transparent;
-    border: 1px solid rgba(255,245,230,0.3);
-    color: rgba(255,245,230,0.6);
-  }
-  .close-reveal{
-    position:absolute;
-    top: 2.4rem; right: 2.4rem;
-    color: rgba(255,245,230,0.5);
-    font-size: 1.6rem;
-    cursor: pointer;
-    background:none; border:none;
-    line-height:1;
-  }
-  .yes-message{
-    margin-top: 2rem;
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.3rem, 3.6vw, 1.8rem);
-    color: var(--gold);
-    opacity: 0;
-  }
-
-  /* ---------- ENDING ---------- */
-  #ending{
-    min-height: 100vh;
-  }
-  #ending .display{
-    font-size: clamp(2rem, 6.5vw, 3.6rem);
-    font-style: italic;
-  }
-  #ending .sig{
-    margin-top: 1.6rem;
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
-    color: var(--rose);
-    letter-spacing: 0.03em;
-  }
-  .fade-frame{
-    opacity: 0;
-  }
-
-  /* audio toggle */
-  #sound-toggle{
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 60;
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor: pointer;
-    font-size: 1.3rem;
-    color: var(--cream);
-    transition: all 0.3s ease;
-  }
-  #sound-toggle:hover{ background: rgba(255,143,179,0.2); }
-
-  @media (max-width: 640px){
-    .glass{ padding: 2.2rem 1.6rem; border-radius: 22px; }
-    .memory-frame{ padding: 2.4rem 1.6rem; }
-    #hero .names{ margin-top: 0.9rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-
-<button id="sound-toggle" aria-label="Toggle music">🔇</button>
-
-<!-- 1. HERO -->
-<section class="scene" id="hero">
-  <div class="eyebrow">a firefly found its light</div>
-  <h1 class="display glow-text">I Love You <span style="color:var(--rose-deep);">❤️</span></h1>
-  <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
-  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
-</section>
-
-<!-- 2. LOVE WORLD -->
-<section class="scene" id="loveworld">
-  <p class="line-reveal" data-line="1">Since the day I met you, my life feels complete.</p>
-  <p class="line-reveal" data-line="2">You are my peace, my happiness, and my everything.</p>
-  <p class="line-reveal" data-line="3">Every moment with you is special to me.</p>
-</section>
-
-<!-- 3. MEMORY -->
-<section class="scene" id="memory">
-  <div class="memory-frame">
-    <div class="memory-date">11 January 2026</div>
-    <div class="memory-sub">The day my heart found you ❤️</div>
-  </div>
-</section>
-
-<!-- 4. FEELINGS -->
-<section class="scene" id="feelings">
-  <p class="feel-line" data-line="1">You are the reason behind my smile.</p>
-  <p class="feel-line" data-line="2">I feel lucky to have you in my life.</p>
-  <p class="feel-line" data-line="2">Ha Ha pta h Madam ji in sb ka reply hoga "chup rho" or "bhapp" lekin Jugnu hayee!! Aapka Gussa bhi bahot bahot pyara lgta h 🫠💕🫂
-    meri pyari Jugnu 🤌🏻 pass hoti to har gusse pr hug 🫂 krta 🤌🏻💕🫠 I Love You Jugnu.</p>
-</section>
-
-<!-- 5. PROPOSAL -->
-<section class="scene" id="proposal">
-  <div class="glass">
-    <div class="eyebrow">one question, always</div>
-    <h2 class="display" style="font-size:clamp(1.6rem,4.5vw,2.4rem); font-style:italic; margin-bottom:1.8rem;">Every star tonight is a little braver because of you.</h2>
-    <button class="heart-btn" id="open-heart">Open My Heart ❤️</button>
-  </div>
-</section>
-
-<!-- 6. ENDING -->
-<section class="scene" id="ending">
-  <div class="fade-frame" id="ending-frame">
-    <div class="eyebrow">always, and after always</div>
-    <h2 class="display glow-text">I will always love you,</h2>
-    <div class="sig">Mehak <span class="firefly-word">(Jugnu)</span> ❤️✨</div>
-  </div>
-</section>
-
-<!-- PROPOSAL REVEAL OVERLAY -->
-<div class="proposal-reveal" id="proposal-overlay">
-  <button class="close-reveal" id="close-reveal" aria-label="Close">✕</button>
-  <div class="proposal-question">Will you stay with me forever? 💍</div>
-  <div class="answer-btns" id="answer-btns">
-    <button class="ans-btn ans-yes" id="ans-yes">Yes, forever ❤️</button>
-    <button class="ans-btn ans-no" id="ans-no">Ask me softly again</button>
-  </div>
-  <div class="yes-message" id="yes-message">Then my firefly has finally come home. ✨</div>
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="loader-firefly"></div>
+  <p class="loader-text">lighting the fireflies<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
 </div>
 
-<audio id="bg-music" loop preload="none">
-  <source src="ssvid.net--Anuv-Jain-Arz-Kiya-Hai-Official-Lyrical-Video_128kbps.m4a.mp3" type="audio/mp3">
+<!-- ============ AMBIENT AUDIO ============ -->
+<audio id="bg-music" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
 </audio>
+<audio id="chime-sound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3" type="audio/mpeg">
+</audio>
+<audio id="yes-sound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_a2d81f5d3a.mp3" type="audio/mpeg">
+</audio>
+
+<button id="sound-toggle" aria-label="Toggle music">
+  <svg id="sound-on-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.28v8.56c1.23-.99 2-2.51 2-4.28zM14 4.45v2.06a5.5 5.5 0 0 1 0 10.98v2.06A7.5 7.5 0 0 0 14 4.45z"/></svg>
+  <svg id="sound-off-icon" viewBox="0 0 24 24" width="20" height="20" style="display:none"><path fill="currentColor" d="M16.5 12a4.5 4.5 0 0 0-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.94 8.94 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+</button>
+
+<!-- ============ 3D BACKGROUND CANVAS ============ -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ============ CLICK RIPPLE LAYER ============ -->
+<div id="ripple-layer"></div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<main id="content">
+
+  <!-- HERO -->
+  <section class="section hero" id="hero">
+    <div class="hero-glow"></div>
+    <p class="eyebrow">a little universe, made for you</p>
+    <h1 class="hero-title">
+      <span class="line1">Aditya <span class="heart-symbol">❤</span> Jugnu</span>
+    </h1>
+    <p class="hero-sub">I Love You, Mehak</p>
+    <div class="scroll-cue">
+      <span>scroll to begin our story</span>
+      <div class="scroll-line"><div class="scroll-dot"></div></div>
+    </div>
+  </section>
+
+  <!-- LOVE STORY -->
+  <section class="section story" id="story">
+    <div class="story-inner">
+      <p class="story-line" data-line>Since 11 January 2026,</p>
+      <p class="story-line" data-line>my life changed forever.</p>
+      <p class="story-line story-line--accent" data-line>You are my happiness,</p>
+      <p class="story-line story-line--accent" data-line>my peace, my everything.</p>
+      <p class="story-line story-line--small" data-line>Every firefly I see now, I think of you —</p>
+      <p class="story-line story-line--small" data-line>small, glowing, impossible to look away from.</p>
+    </div>
+  </section>
+
+  <!-- MEMORY CARD -->
+  <section class="section memory" id="memory">
+    <p class="section-kicker">the beginning</p>
+    <div class="memory-card-wrap">
+      <div class="memory-card" id="memory-card">
+        <div class="memory-card-shine"></div>
+        <span class="memory-date-badge">11.01.2026</span>
+        <h2 class="memory-title">The day my heart<br>found you</h2>
+        <p class="memory-text">A date I'll never let go of. Not because it's marked on a calendar — but because it's marked on me.</p>
+        <div class="memory-heart">❤</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI GAME -->
+  <section class="section game" id="game">
+    <p class="section-kicker">catch a little love</p>
+    <h2 class="game-title">Catch My Hearts, Mehak</h2>
+    <p class="game-sub">Tap or click every heart before it drifts away.</p>
+
+    <div class="game-hud">
+      <div class="game-score">Score: <span id="score-val">0</span> / <span id="score-target">15</span></div>
+      <button id="game-start" class="btn btn--ghost">Start</button>
+    </div>
+
+    <div class="game-stage" id="game-stage">
+      <div class="game-unlock" id="game-unlock">
+        <p>You have collected all my love ❤</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRANK -->
+  <section class="section prank" id="prank">
+    <p class="section-kicker">just one question</p>
+    <h2 class="prank-title">Do you know how much I love you?</h2>
+    <p class="prank-msg" id="prank-msg">&nbsp;</p>
+    <div class="prank-buttons">
+      <button class="btn btn--primary" id="prank-yes">Yes, tell me ❤</button>
+      <button class="btn btn--outline" id="prank-no">No</button>
+    </div>
+  </section>
+
+  <!-- PROPOSAL -->
+  <section class="section proposal" id="proposal">
+    <div class="proposal-pre" id="proposal-pre">
+      <p class="section-kicker">the real question</p>
+      <h2 class="proposal-title">There's something<br>I've been meaning to ask.</h2>
+      <button class="btn btn--glow" id="open-heart-btn">Open My Heart ❤</button>
+    </div>
+
+    <div class="proposal-scene" id="proposal-scene">
+      <canvas id="heart-canvas"></canvas>
+      <div class="proposal-question" id="proposal-question">
+        <h2>Will you stay with me<br>forever, Mehak? 💍</h2>
+        <div class="proposal-buttons">
+          <button class="btn btn--primary btn--large" id="btn-yes">Yes, forever ❤</button>
+          <button class="btn btn--outline" id="btn-no">No</button>
+        </div>
+      </div>
+      <div class="proposal-success" id="proposal-success">
+        <div class="success-burst" id="success-burst"></div>
+        <h2>She said yes. ❤</h2>
+        <p>Forever starts now, my Jugnu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENDING -->
+  <section class="section ending" id="ending">
+    <p class="ending-glow-text">Forever Yours,</p>
+    <h2 class="ending-title">Aditya <span class="heart-symbol">❤</span> Jugnu <span class="sparkle">✨</span></h2>
+    <p class="ending-sub">11.01.2026 — and every day after.</p>
+  </section>
+
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-/* ============================================================
-   THREE.JS SCENE — space, particles, firefly, heart constellation
-   ============================================================ */
-const canvas = document.getElementById('bg-canvas');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x180e28, 0.012);
-
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 3000);
-camera.position.set(0, 0, 60);
-
-// Lighting — soft cinematic, warm rose + gold rim
-const ambient = new THREE.AmbientLight(0x2d1b4e, 1.2);
-scene.add(ambient);
-const roseLight = new THREE.PointLight(0xff5f96, 2.2, 400);
-roseLight.position.set(30, 20, 40);
-scene.add(roseLight);
-const goldLight = new THREE.PointLight(0xffd699, 1.6, 400);
-goldLight.position.set(-40, -10, 20);
-scene.add(goldLight);
-
-/* ---------- Starfield ---------- */
-function makeStars(count, spread, size, color, opacity){
-  const geo = new THREE.BufferGeometry();
-  const positions = new Float32Array(count*3);
-  for(let i=0;i<count;i++){
-    positions[i*3] = (Math.random()-0.5)*spread;
-    positions[i*3+1] = (Math.random()-0.5)*spread;
-    positions[i*3+2] = (Math.random()-0.5)*spread - 100;
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
-  const mat = new THREE.PointsMaterial({ color, size, transparent:true, opacity, depthWrite:false, blending: THREE.AdditiveBlending });
-  return new THREE.Points(geo, mat);
-}
-const starsFar = makeStars(2200, 900, 0.9, 0xfff5e6, 0.55);
-const starsMid = makeStars(700, 500, 1.6, 0xffd699, 0.7);
-const starsNear = makeStars(200, 260, 2.4, 0xff8fb3, 0.85);
-scene.add(starsFar, starsMid, starsNear);
-
-/* ---------- Floating glow particles (light dust) ---------- */
-const dustGeo = new THREE.BufferGeometry();
-const dustCount = 500;
-const dustPos = new Float32Array(dustCount*3);
-const dustSpeeds = new Float32Array(dustCount);
-for(let i=0;i<dustCount;i++){
-  dustPos[i*3] = (Math.random()-0.5)*220;
-  dustPos[i*3+1] = (Math.random()-0.5)*220;
-  dustPos[i*3+2] = (Math.random()-0.5)*400 - 50;
-  dustSpeeds[i] = 0.02 + Math.random()*0.05;
-}
-dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos,3));
-const dustMat = new THREE.PointsMaterial({
-  color: 0xffe0c2, size: 1.1, transparent:true, opacity:0.5,
-  blending: THREE.AdditiveBlending, depthWrite:false
-});
-const dust = new THREE.Points(dustGeo, dustMat);
-scene.add(dust);
-
-/* ---------- Floating 3D hearts ---------- */
-function heartShape(){
-  const shape = new THREE.Shape();
-  shape.moveTo(0, 0.5);
-  shape.bezierCurveTo(0, 0.9, -0.5, 1.2, -1, 0.9);
-  shape.bezierCurveTo(-1.6, 0.55, -1.5, -0.2, -1, -0.7);
-  shape.bezierCurveTo(-0.6, -1.1, -0.2, -1.3, 0, -1.6);
-  shape.bezierCurveTo(0.2, -1.3, 0.6, -1.1, 1, -0.7);
-  shape.bezierCurveTo(1.5, -0.2, 1.6, 0.55, 1, 0.9);
-  shape.bezierCurveTo(0.5, 1.2, 0, 0.9, 0, 0.5);
-  return shape;
-}
-const heartGeo = new THREE.ExtrudeGeometry(heartShape(), { depth: 0.35, bevelEnabled:true, bevelThickness:0.08, bevelSize:0.08, bevelSegments:3, curveSegments: 12 });
-heartGeo.scale(0.5,0.5,0.5);
-
-const heartMat = new THREE.MeshStandardMaterial({
-  color: 0xff5f96, emissive: 0xff2f6d, emissiveIntensity: 0.55,
-  metalness: 0.3, roughness: 0.35, transparent:true, opacity: 0.92
-});
-
-const hearts = [];
-const HEART_COUNT = 26;
-for(let i=0;i<HEART_COUNT;i++){
-  const m = new THREE.Mesh(heartGeo, heartMat.clone());
-  m.material.color.offsetHSL((Math.random()-0.5)*0.05, 0, (Math.random()-0.5)*0.1);
-  const scale = 0.5 + Math.random()*1.1;
-  m.scale.setScalar(scale);
-  m.position.set(
-    (Math.random()-0.5)*90,
-    (Math.random()-0.5)*70,
-    (Math.random()-0.5)*180 - 20
-  );
-  m.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
-  m.userData = {
-    baseY: m.position.y,
-    floatSpeed: 0.3 + Math.random()*0.5,
-    floatOffset: Math.random()*Math.PI*2,
-    rotSpeed: (Math.random()-0.5)*0.25,
-    baseX: m.position.x,
-    baseZ: m.position.z
-  };
-  hearts.push(m);
-  scene.add(m);
-}
-
-/* ---------- The Firefly (Jugnu) — signature element ---------- */
-const fireflyGroup = new THREE.Group();
-const fireflyCore = new THREE.Mesh(
-  new THREE.SphereGeometry(0.5, 16, 16),
-  new THREE.MeshBasicMaterial({ color: 0xfff2c0 })
-);
-fireflyGroup.add(fireflyCore);
-const fireflyGlow = new THREE.PointLight(0xffe9a8, 3.5, 30);
-fireflyGroup.add(fireflyGlow);
-// soft sprite halo
-const haloCanvas = document.createElement('canvas');
-haloCanvas.width = 128; haloCanvas.height = 128;
-const hctx = haloCanvas.getContext('2d');
-const grad = hctx.createRadialGradient(64,64,0,64,64,64);
-grad.addColorStop(0, 'rgba(255,240,200,0.9)');
-grad.addColorStop(0.4, 'rgba(255,180,200,0.4)');
-grad.addColorStop(1, 'rgba(255,180,200,0)');
-hctx.fillStyle = grad;
-hctx.fillRect(0,0,128,128);
-const haloTex = new THREE.CanvasTexture(haloCanvas);
-const haloMat = new THREE.SpriteMaterial({ map: haloTex, transparent:true, blending: THREE.AdditiveBlending, depthWrite:false });
-const halo = new THREE.Sprite(haloMat);
-halo.scale.set(6,6,1);
-fireflyGroup.add(halo);
-fireflyGroup.position.set(0, 0, 20);
-scene.add(fireflyGroup);
-
-// Firefly trail (glowing dust it leaves behind)
-const TRAIL_LEN = 60;
-const trailGeo = new THREE.BufferGeometry();
-const trailPos = new Float32Array(TRAIL_LEN*3);
-trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos,3));
-const trailMat = new THREE.PointsMaterial({ color:0xffe0a0, size:0.9, transparent:true, opacity:0.55, blending: THREE.AdditiveBlending, depthWrite:false });
-const trail = new THREE.Points(trailGeo, trailMat);
-scene.add(trail);
-const trailHistory = [];
-
-/* ---------- Heart constellation (revealed at proposal) ---------- */
-function heartPoints(n){
-  const pts = [];
-  for(let i=0;i<n;i++){
-    const t = (i/n)*Math.PI*2;
-    const x = 16*Math.pow(Math.sin(t),3);
-    const y = 13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-    pts.push(new THREE.Vector3(x*0.9, y*0.9, 0));
-  }
-  return pts;
-}
-const constellationPts = heartPoints(80);
-const constGeo = new THREE.BufferGeometry().setFromPoints(constellationPts);
-const constMat = new THREE.PointsMaterial({ color:0xffd699, size:1.6, transparent:true, opacity:0, blending: THREE.AdditiveBlending, depthWrite:false });
-const constellation = new THREE.Points(constGeo, constMat);
-constellation.position.set(0, 8, -10);
-scene.add(constellation);
-
-// connecting lines for constellation
-const lineGeo = new THREE.BufferGeometry().setFromPoints(constellationPts.concat([constellationPts[0]]));
-const lineMat = new THREE.LineBasicMaterial({ color: 0xff8fb3, transparent:true, opacity:0 });
-const constLine = new THREE.Line(lineGeo, lineMat);
-constLine.position.copy(constellation.position);
-scene.add(constLine);
-
-/* ============================================================
-   Camera path & scroll-driven movement (parallax through space)
-   ============================================================ */
-let scrollProgress = 0;
-let targetScrollProgress = 0;
-
-const cameraPath = [
-  { z: 60, y: 0,  x: 0,   rotY: 0 },      // hero
-  { z: 20, y: 4,  x: -6,  rotY: 0.15 },   // loveworld
-  { z: -2, y: -2, x: 5,   rotY: -0.1 },   // memory
-  { z: -26, y: 3, x: -4,  rotY: 0.12 },   // feelings
-  { z: -50, y: 0, x: 0,   rotY: 0 },      // proposal
-  { z: -78, y: -3,x: 0,   rotY: 0 },      // ending
-];
-
-function updateCameraFromProgress(p){
-  const scaled = p * (cameraPath.length - 1);
-  const idx = Math.min(Math.floor(scaled), cameraPath.length - 2);
-  const local = scaled - idx;
-  const a = cameraPath[idx];
-  const b = cameraPath[idx+1];
-  camera.position.x = THREE.MathUtils.lerp(a.x, b.x, local);
-  camera.position.y = THREE.MathUtils.lerp(a.y, b.y, local);
-  camera.position.z = THREE.MathUtils.lerp(a.z, b.z, local);
-  camera.rotation.y = THREE.MathUtils.lerp(a.rotY, b.rotY, local);
-}
-
-ScrollTrigger.create({
-  trigger: document.body,
-  start: 'top top',
-  end: 'bottom bottom',
-  onUpdate: (self) => {
-    targetScrollProgress = self.progress;
-  }
-});
-
-/* mouse parallax */
-let mouseX = 0, mouseY = 0;
-window.addEventListener('mousemove', (e) => {
-  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-});
-window.addEventListener('touchmove', (e) => {
-  if(e.touches[0]){
-    mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
-  }
-}, { passive:true });
-
-/* click/tap ripple on hearts (interactive floating hearts) */
-const raycaster = new THREE.Raycaster();
-const pointerVec = new THREE.Vector2();
-function handlePointer(clientX, clientY){
-  pointerVec.x = (clientX/window.innerWidth)*2 - 1;
-  pointerVec.y = -(clientY/window.innerHeight)*2 + 1;
-  raycaster.setFromCamera(pointerVec, camera);
-  const intersects = raycaster.intersectObjects(hearts);
-  if(intersects.length){
-    const h = intersects[0].object;
-    gsap.to(h.scale, { x: h.scale.x*1.6, y: h.scale.y*1.6, z: h.scale.z*1.6, duration:0.35, ease:'back.out(3)', yoyo:true, repeat:1 });
-  }
-}
-window.addEventListener('click', (e) => handlePointer(e.clientX, e.clientY));
-window.addEventListener('touchstart', (e) => {
-  if(e.touches[0]) handlePointer(e.touches[0].clientX, e.touches[0].clientY);
-}, { passive:true });
-
-/* ---------- Proposal reveal → morph firefly's trail into heart constellation ---------- */
-let constellationRevealed = false;
-function revealConstellation(){
-  if(constellationRevealed) return;
-  constellationRevealed = true;
-  gsap.to(constMat, { opacity: 0.95, duration: 2.2, ease:'power2.out' });
-  gsap.to(lineMat, { opacity: 0.35, duration: 2.2, ease:'power2.out', delay:0.3 });
-}
-
-/* ============================================================
-   Animate loop
-   ============================================================ */
-const clock = new THREE.Clock();
-
-function animate(){
-  requestAnimationFrame(animate);
-  const t = clock.getElapsedTime();
-
-  // smooth scroll progress
-  scrollProgress += (targetScrollProgress - scrollProgress) * 0.06;
-  updateCameraFromProgress(scrollProgress);
-
-  // mouse parallax offset on top of scroll camera
-  camera.position.x += (mouseX*3 - 0) * 0.0; // handled below via lerp target instead
-  camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, -mouseY*0.05, 0.05);
-  camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, -mouseX*0.03, 0.05);
-  camera.lookAt(
-    camera.position.x + Math.sin(camera.rotation.y)*-10,
-    camera.position.y,
-    camera.position.z + Math.cos(camera.rotation.y)*-10
-  );
-
-  // stars drift slowly
-  starsFar.rotation.y = t*0.005;
-  starsMid.rotation.y = t*0.008;
-  starsNear.rotation.y = t*0.012;
-
-  // dust drifting upward gently
-  const dp = dust.geometry.attributes.position.array;
-  for(let i=0;i<dustCount;i++){
-    dp[i*3+1] += dustSpeeds[i]*0.05;
-    if(dp[i*3+1] > 110) dp[i*3+1] = -110;
-  }
-  dust.geometry.attributes.position.needsUpdate = true;
-
-  // hearts float + rotate
-  hearts.forEach(h => {
-    const u = h.userData;
-    h.position.y = u.baseY + Math.sin(t*u.floatSpeed + u.floatOffset)*2.2;
-    h.position.x = u.baseX + Math.sin(t*u.floatSpeed*0.6 + u.floatOffset)*1.4;
-    h.rotation.x += u.rotSpeed*0.01;
-    h.rotation.y += u.rotSpeed*0.015;
-  });
-
-  // firefly wandering path, biased toward camera's current depth
-  const fx = Math.sin(t*0.35)*14 + Math.sin(t*0.12)*6;
-  const fy = Math.sin(t*0.5)*7 + 3;
-  const fz = camera.position.z + 14 + Math.sin(t*0.2)*4;
-  fireflyGroup.position.set(fx, fy, fz);
-  fireflyCore.material.color.setHSL(0.13, 0.9, 0.6 + Math.sin(t*6)*0.15);
-  fireflyGlow.intensity = 3 + Math.sin(t*6)*1.2;
-  halo.scale.setScalar(6 + Math.sin(t*6)*1.2);
-
-  // update trail
-  trailHistory.unshift({x:fx,y:fy,z:fz});
-  if(trailHistory.length > TRAIL_LEN) trailHistory.pop();
-  for(let i=0;i<TRAIL_LEN;i++){
-    const p = trailHistory[i] || trailHistory[trailHistory.length-1] || {x:fx,y:fy,z:fz};
-    trailPos[i*3] = p.x;
-    trailPos[i*3+1] = p.y;
-    trailPos[i*3+2] = p.z;
-  }
-  trail.geometry.attributes.position.needsUpdate = true;
-  trailMat.opacity = 0.5;
-
-  // constellation gentle rotation once revealed
-  if(constellationRevealed){
-    constellation.rotation.z = Math.sin(t*0.15)*0.03;
-    constLine.rotation.z = constellation.rotation.z;
-    constellation.position.z = -50 + Math.sin(t*0.2)*2;
-    constLine.position.z = constellation.position.z;
-  } else {
-    constellation.position.copy(new THREE.Vector3(0,8,cameraPath[4].z - 10));
-    constLine.position.copy(constellation.position);
-  }
-
-  roseLight.intensity = 2 + Math.sin(t*0.7)*0.4;
-  goldLight.intensity = 1.6 + Math.cos(t*0.5)*0.3;
-
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-/* ============================================================
-   GSAP text reveals per section
-   ============================================================ */
-gsap.utils.toArray('.line-reveal').forEach((el, i) => {
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 75%',
-    onEnter: () => gsap.to(el, { opacity:1, y:0, duration:1.1, ease:'power3.out' }),
-    onLeaveBack: () => gsap.to(el, { opacity:0, y:30, duration:0.6 })
-  });
-});
-gsap.utils.toArray('.feel-line').forEach((el) => {
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 78%',
-    onEnter: () => gsap.to(el, { opacity:1, y:0, duration:1.1, ease:'power3.out' }),
-    onLeaveBack: () => gsap.to(el, { opacity:0, y:30, duration:0.6 })
-  });
-});
-
-// memory frame subtle entrance
-gsap.set('.memory-frame', { opacity:0, scale:0.85 });
-ScrollTrigger.create({
-  trigger: '#memory',
-  start: 'top 60%',
-  onEnter: () => gsap.to('.memory-frame', { opacity:1, scale:1, duration:1.4, ease:'power3.out' }),
-  onLeaveBack: () => gsap.to('.memory-frame', { opacity:0, scale:0.85, duration:0.6 })
-});
-
-// ending fade in + reveal constellation as user approaches ending
-gsap.set('#ending-frame', { opacity:0, y:20 });
-ScrollTrigger.create({
-  trigger: '#ending',
-  start: 'top 65%',
-  onEnter: () => {
-    gsap.to('#ending-frame', { opacity:1, y:0, duration:1.6, ease:'power2.out' });
-  },
-  onLeaveBack: () => gsap.to('#ending-frame', { opacity:0, y:20, duration:0.6 })
-});
-
-ScrollTrigger.create({
-  trigger: '#proposal',
-  start: 'top 50%',
-  onEnter: revealConstellation
-});
-
-/* hero entrance */
-gsap.from('#hero .display', { opacity:0, y:40, duration:1.6, ease:'power3.out', delay:0.3 });
-gsap.from('#hero .names', { opacity:0, y:30, duration:1.6, ease:'power3.out', delay:0.7 });
-gsap.from('.eyebrow', { opacity:0, duration:1.6, delay:0.1 });
-
-/* ============================================================
-   Proposal interaction
-   ============================================================ */
-const overlay = document.getElementById('proposal-overlay');
-const openHeartBtn = document.getElementById('open-heart');
-const closeBtn = document.getElementById('close-reveal');
-const ansYes = document.getElementById('ans-yes');
-const ansNo = document.getElementById('ans-no');
-const yesMessage = document.getElementById('yes-message');
-const answerBtns = document.getElementById('answer-btns');
-
-openHeartBtn.addEventListener('click', () => {
-  overlay.classList.add('active');
-  gsap.to(overlay, { opacity:1, duration:1, ease:'power2.out' });
-  gsap.fromTo('.proposal-question', { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:1.1, ease:'back.out(1.6)', delay:0.2 });
-  gsap.fromTo('#answer-btns', { opacity:0, y:20 }, { opacity:1, y:0, duration:0.8, delay:0.7 });
-  revealConstellation();
-});
-
-function closeOverlay(){
-  gsap.to(overlay, { opacity:0, duration:0.6, onComplete: () => overlay.classList.remove('active') });
-}
-closeBtn.addEventListener('click', closeOverlay);
-
-let noClickCount = 0;
-ansNo.addEventListener('click', () => {
-  noClickCount++;
-  const phrases = ['Ask me softly again', 'Please... think again? 🥺', 'My heart is waiting ❤️', 'Just one little "yes"...'];
-  ansNo.textContent = phrases[Math.min(noClickCount, phrases.length-1)];
-  gsap.to(ansNo, { x: (Math.random()-0.5)*40, duration:0.3, ease:'power2.out' });
-});
-
-ansYes.addEventListener('click', () => {
-  gsap.to(answerBtns, { opacity:0, y:-10, duration:0.5 });
-  gsap.to(yesMessage, { opacity:1, y:0, duration:1.2, delay:0.3, ease:'power2.out' });
-  gsap.to('.proposal-question', { scale:1.08, duration:0.6, ease:'back.out(2)' });
-  // little celebratory heart burst
-  for(let i=0;i<18;i++){
-    const m = new THREE.Mesh(heartGeo, heartMat.clone());
-    m.scale.setScalar(0.4 + Math.random()*0.5);
-    m.position.copy(fireflyGroup.position);
-    scene.add(m);
-    const dir = new THREE.Vector3((Math.random()-0.5)*20, Math.random()*14+4, (Math.random()-0.5)*20);
-    gsap.to(m.position, { x: m.position.x+dir.x, y: m.position.y+dir.y, z: m.position.z+dir.z, duration: 2+Math.random(), ease:'power2.out' });
-    gsap.to(m.material, { opacity:0, duration:2.2, onComplete: () => scene.remove(m) });
-  }
-});
-
-/* ============================================================
-   Music toggle
-   ============================================================ */
-const musicBtn = document.getElementById('sound-toggle');
-const music = document.getElementById('bg-music');
-let musicPlaying = false;
-musicBtn.addEventListener('click', () => {
-  if(!musicPlaying){
-    music.volume = 0.35;
-    music.play().catch(()=>{});
-    musicBtn.textContent = '🔊';
-    musicPlaying = true;
-  } else {
-    music.pause();
-    musicBtn.textContent = '🔇';
-    musicPlaying = false;
-  }
-});
-</script>
+<script src="scene.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
