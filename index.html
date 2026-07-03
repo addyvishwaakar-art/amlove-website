@@ -3,37 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Aditya &amp; Jugnu — For Mehak</title>
+<title>Aditya ❤ Jugnu — For Mehak</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Italiana&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- SVG defs: gradients + reusable heart path -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e8b978"/>
-      <stop offset="100%" stop-color="#e8547e"/>
-    </linearGradient>
-  </defs>
-</svg>
-
-<div id="grain"></div>
-<div id="vignette"></div>
-
 <!-- ============ LOADER ============ -->
 <div id="loader">
-  <div class="loader-mark">
-    <svg viewBox="0 0 56 56">
-      <path class="lp" d="M28 51 C28 51 4 35 4 18 C4 9 11 3 19 3 C23.5 3 27 5.5 28 10 C29 5.5 32.5 3 37 3 C45 3 52 9 52 18 C52 35 28 51 28 51 Z"/>
-    </svg>
-  </div>
-  <p class="loader-label">a little universe, loading</p>
+  <div class="loader-firefly"></div>
+  <p class="loader-text">lighting the fireflies<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
 </div>
 
 <!-- ============ AMBIENT AUDIO ============ -->
@@ -48,12 +31,14 @@
 </audio>
 
 <button id="sound-toggle" aria-label="Toggle music">
-  <svg id="sound-on-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.28v8.56c1.23-.99 2-2.51 2-4.28zM14 4.45v2.06a5.5 5.5 0 0 1 0 10.98v2.06A7.5 7.5 0 0 0 14 4.45z"/></svg>
-  <svg id="sound-off-icon" viewBox="0 0 24 24" width="18" height="18" style="display:none"><path fill="currentColor" d="M16.5 12a4.5 4.5 0 0 0-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.94 8.94 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+  <svg id="sound-on-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.28v8.56c1.23-.99 2-2.51 2-4.28zM14 4.45v2.06a5.5 5.5 0 0 1 0 10.98v2.06A7.5 7.5 0 0 0 14 4.45z"/></svg>
+  <svg id="sound-off-icon" viewBox="0 0 24 24" width="20" height="20" style="display:none"><path fill="currentColor" d="M16.5 12a4.5 4.5 0 0 0-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.94 8.94 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
 </button>
 
+<!-- ============ 3D BACKGROUND CANVAS ============ -->
 <canvas id="bg-canvas"></canvas>
-<div class="bg-scrim"></div>
+
+<!-- ============ CLICK RIPPLE LAYER ============ -->
 <div id="ripple-layer"></div>
 
 <!-- ============ MAIN CONTENT ============ -->
@@ -61,104 +46,103 @@
 
   <!-- HERO -->
   <section class="section hero" id="hero">
-    <div class="hero-frame"></div>
-    <p class="hero-mark">a story, written in starlight</p>
-    <h1 class="hero-title">Aditya <span class="amp">&amp;</span> Jugnu</h1>
-    <p class="hero-sub">I love you, <em>Mehak</em></p>
-    <div class="hero-rule"></div>
+    <div class="hero-glow"></div>
+    <p class="eyebrow">a little universe, made for you</p>
+    <h1 class="hero-title">
+      <span class="line1">Aditya <span class="heart-symbol">❤</span> Jugnu</span>
+    </h1>
+    <p class="hero-sub">I Love You, Mehak</p>
     <div class="scroll-cue">
-      <span>begin our story</span>
-      <div class="scroll-line"><div class="scroll-line-fill"></div></div>
+      <span>scroll to begin our story</span>
+      <div class="scroll-line"><div class="scroll-dot"></div></div>
     </div>
   </section>
 
   <!-- LOVE STORY -->
   <section class="section story" id="story">
     <div class="story-inner">
-      <p class="story-line" data-line>Since the 11th of January, 2026,</p>
+      <p class="story-line" data-line>Since 11 January 2026,</p>
       <p class="story-line" data-line>my life changed forever.</p>
-      <div class="story-divider"></div>
       <p class="story-line story-line--accent" data-line>You are my happiness,</p>
       <p class="story-line story-line--accent" data-line>my peace, my everything.</p>
-      <p class="story-line story-line--small" data-line>Every firefly I see now, I think of you —<br>small, glowing, impossible to look away from.</p>
+      <p class="story-line story-line--small" data-line>Every firefly I see now, I think of you —</p>
+      <p class="story-line story-line--small" data-line>small, glowing, impossible to look away from.</p>
     </div>
   </section>
 
   <!-- MEMORY CARD -->
   <section class="section memory" id="memory">
-    <p class="kicker">the beginning</p>
+    <p class="section-kicker">the beginning</p>
     <div class="memory-card-wrap">
       <div class="memory-card" id="memory-card">
         <div class="memory-card-shine"></div>
-        <span class="memory-date-badge">11 · 01 · 2026</span>
+        <span class="memory-date-badge">11.01.2026</span>
         <h2 class="memory-title">The day my heart<br>found you</h2>
         <p class="memory-text">A date I'll never let go of. Not because it's marked on a calendar — but because it's marked on me.</p>
-        <span class="memory-heart"><svg viewBox="0 0 32 29"><path d="M16 28.6 C16 28.6 1.6 19.6 1.6 9.8 C1.6 4.6 5.6 1 10.2 1 C13 1 15 2.4 16 4.6 C17 2.4 19 1 21.8 1 C26.4 1 30.4 4.6 30.4 9.8 C30.4 19.6 16 28.6 16 28.6 Z" fill="#e8547e"/></svg></span>
+        <div class="memory-heart">❤</div>
       </div>
     </div>
   </section>
 
   <!-- MINI GAME -->
   <section class="section game" id="game">
-    <p class="kicker">catch a little love</p>
-    <h2 class="game-title">Catch my hearts, Mehak</h2>
-    <p class="game-sub">Tap every heart before it drifts into the night.</p>
+    <p class="section-kicker">catch a little love</p>
+    <h2 class="game-title">Catch My Hearts, Mehak</h2>
+    <p class="game-sub">Tap or click every heart before it drifts away.</p>
 
     <div class="game-hud">
-      <div class="game-score">Score — <span id="score-val">0</span> / <span id="score-target">15</span></div>
-      <button id="game-start" class="btn btn--ghost"><span>Start</span></button>
+      <div class="game-score">Score: <span id="score-val">0</span> / <span id="score-target">15</span></div>
+      <button id="game-start" class="btn btn--ghost">Start</button>
     </div>
 
     <div class="game-stage" id="game-stage">
       <div class="game-unlock" id="game-unlock">
-        <p>You have collected all my love</p>
+        <p>You have collected all my love ❤</p>
       </div>
     </div>
   </section>
 
   <!-- PRANK -->
   <section class="section prank" id="prank">
-    <p class="kicker">just one question</p>
+    <p class="section-kicker">just one question</p>
     <h2 class="prank-title">Do you know how much I love you?</h2>
     <p class="prank-msg" id="prank-msg">&nbsp;</p>
     <div class="prank-buttons">
-      <button class="btn btn--primary" id="prank-yes"><span>Yes, tell me</span></button>
-      <button class="btn btn--outline" id="prank-no"><span>No</span></button>
+      <button class="btn btn--primary" id="prank-yes">Yes, tell me ❤</button>
+      <button class="btn btn--outline" id="prank-no">No</button>
     </div>
   </section>
 
   <!-- PROPOSAL -->
   <section class="section proposal" id="proposal">
     <div class="proposal-pre" id="proposal-pre">
-      <p class="kicker">the real question</p>
+      <p class="section-kicker">the real question</p>
       <h2 class="proposal-title">There's something<br>I've been meaning to ask.</h2>
-      <button class="btn btn--glow" id="open-heart-btn"><span>Open my heart</span></button>
+      <button class="btn btn--glow" id="open-heart-btn">Open My Heart ❤</button>
     </div>
 
     <div class="proposal-scene" id="proposal-scene">
       <canvas id="heart-canvas"></canvas>
       <div class="proposal-question" id="proposal-question">
-        <h2>Will you stay with me<br>forever, Mehak?</h2>
+        <h2>Will you stay with me<br>forever, Mehak? 💍</h2>
         <div class="proposal-buttons">
-          <button class="btn btn--primary btn--large" id="btn-yes"><span>Yes, forever</span></button>
-          <button class="btn btn--outline" id="btn-no"><span>No</span></button>
+          <button class="btn btn--primary btn--large" id="btn-yes">Yes, forever ❤</button>
+          <button class="btn btn--outline" id="btn-no">No</button>
         </div>
       </div>
       <div class="proposal-success" id="proposal-success">
         <div class="success-burst" id="success-burst"></div>
-        <h2>She said yes.</h2>
-        <p>Forever starts now, my Jugnu</p>
+        <h2>She said yes. ❤</h2>
+        <p>Forever starts now, my Jugnu.</p>
       </div>
     </div>
   </section>
 
   <!-- ENDING -->
   <section class="section ending" id="ending">
-    <p class="ending-mark">always, and after always</p>
-    <p class="ending-glow-text">Forever yours,</p>
-    <h2 class="ending-title">Aditya <span class="amp">&amp;</span> Jugnu</h2>
-    <p class="ending-sub">11 · 01 · 2026 — AND EVERY DAY AFTER</p>
-    <div class="ending-rule"></div>
+    <p class="ending-glow-text">Forever Yours,</p>
+    <h2 class="ending-title">Aditya <span class="heart-symbol">❤</span> Jugnu <span class="sparkle">✨</span></h2>
+    <p class="ending-sub">11.01.2026 — and every day after.</p>
   </section>
 
 </main>
