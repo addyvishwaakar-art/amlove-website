@@ -51,10 +51,19 @@
     letter-spacing: 0.35em;
     text-transform: uppercase;
     font-size: 0.68rem;
-    color: var(--gold);
-    opacity: 0.75;
+    background: linear-gradient(90deg, var(--gold), var(--rose), var(--gold));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+    opacity: 0.85;
     margin-bottom: 1.4rem;
     font-weight: 500;
+  }
+  @keyframes shimmer{
+    0%{ background-position: 0% 50%; }
+    100%{ background-position: 200% 50%; }
   }
 
   h1, h2, .display{
@@ -97,6 +106,13 @@
   .firefly-word{
     color: var(--gold);
     font-style: italic;
+  }
+  .from-line{
+    margin-top: 1.4rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: clamp(0.85rem, 2.4vw, 1.05rem);
+    color: rgba(255,245,230,0.55);
+    letter-spacing: 0.04em;
   }
   .scroll-cue{
     position:absolute;
@@ -186,7 +202,7 @@
     opacity: 0;
   }
 
-/* ---------- PROPOSAL ---------- */
+  /* ---------- PROPOSAL ---------- */
   #proposal{
     min-height: 100vh;
   }
@@ -239,11 +255,14 @@
     margin-top: 1rem;
   }
   .answer-btns{
+    position: relative;
     display:flex;
     gap: 1.2rem;
     margin-top: 2.6rem;
     flex-wrap: wrap;
     justify-content:center;
+    min-height: 90px;
+    width: min(90vw, 420px);
   }
   .ans-btn{
     font-family:'Quicksand',sans-serif;
@@ -266,6 +285,17 @@
     background: transparent;
     border: 1px solid rgba(255,245,230,0.3);
     color: rgba(255,245,230,0.6);
+    position: relative;
+    z-index: 5;
+  }
+  .prank-hint{
+    margin-top: 1rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,214,153,0.55);
+    letter-spacing: 0.03em;
+    opacity: 0;
+    font-style: italic;
   }
   .close-reveal{
     position:absolute;
@@ -299,24 +329,17 @@
     color: var(--rose);
     letter-spacing: 0.03em;
   }
+  #ending .sig-from{
+    margin-top: 0.9rem;
+    font-size: clamp(0.8rem, 2.2vw, 0.98rem);
+    color: rgba(255,214,153,0.7);
+    letter-spacing: 0.05em;
+    font-family: 'Quicksand', sans-serif;
+  }
   .fade-frame{
     opacity: 0;
   }
-#game-area{
-  overflow: hidden;
-}
-.heart-game{
-  position:absolute;
-  font-size: 24px;
-  cursor:pointer;
-  animation: floatUp 4s linear forwards;
-}
 
-@keyframes floatUp{
-  from{ transform: translateY(100px); opacity:1; }
-  to{ transform: translateY(-300px); opacity:0; }
-}
-  
   /* audio toggle */
   #sound-toggle{
     position: fixed;
@@ -360,6 +383,7 @@
   <div class="eyebrow">a firefly found its light</div>
   <h1 class="display glow-text">I Love You <span style="color:var(--rose-deep);">❤️</span></h1>
   <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
+  <div class="from-line">— from Aditya Raj Vishwaakar's Jugnu <span style="font-size:0.9em;">🤌🏻</span></div>
   <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
@@ -368,8 +392,6 @@
   <p class="line-reveal" data-line="1">Since the day I met you, my life feels complete.</p>
   <p class="line-reveal" data-line="2">You are my peace, my happiness, and my everything.</p>
   <p class="line-reveal" data-line="3">Every moment with you is special to me.</p>
-  <p class="line-reveal" data-line="4"> Ha ha pta h aapka reply hoga "Chup raho" Achha theek hai… chup ho jaata hoon 😌
-par dil ko kaise chup karu… woh to sirf aapko hi bolta hai aapke gusse me bhi pyar hi dikhta hai🤌🏻❤️ Or aapka Reply "Bhappp" hayeee🫠”.</p>
 </section>
 
 <!-- 3. MEMORY -->
@@ -401,40 +423,25 @@ par dil ko kaise chup karu… woh to sirf aapko hi bolta hai aapke gusse me bhi 
     <div class="eyebrow">always, and after always</div>
     <h2 class="display glow-text">I will always love you,</h2>
     <div class="sig">Mehak <span class="firefly-word">(Jugnu)</span> ❤️✨</div>
+    <div class="sig-from">Aditya Raj Vishwaakar's Jugnu, forever 🤌🏻</div>
   </div>
 </section>
-  
-  <section class="scene" id="hero">
-  <div class="eyebrow">Aditya ❤️ Jugnu</div>
-  <h1 class="display glow-text">I Love You ❤️</h1>
-  <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
-</section>
 
-  <!-- GAME SECTION -->
-<section class="scene" id="game">
-  <div class="glass">
-    <div class="eyebrow">a little game for you ❤️</div>
-    <h2 class="display" style="font-size:2rem;">Catch My Love 💞</h2>
-    <p style="margin:1rem 0;">Tap the hearts ❤️</p>
-
-    <div id="game-area" style="position:relative; height:300px;"></div>
-    <div id="score" style="margin-top:1rem;">Score: 0</div>
-  </div>
-</section>
-  
 <!-- PROPOSAL REVEAL OVERLAY -->
 <div class="proposal-reveal" id="proposal-overlay">
   <button class="close-reveal" id="close-reveal" aria-label="Close">✕</button>
   <div class="proposal-question">Will you stay with me forever? 💍</div>
   <div class="answer-btns" id="answer-btns">
     <button class="ans-btn ans-yes" id="ans-yes">Yes, forever ❤️</button>
-    <button class="ans-btn ans-no" id="ans-no">Ask me softly again</button>
+    <button class="ans-btn ans-no" id="ans-no">No 🤏</button>
   </div>
+  <div class="prank-hint" id="prank-hint">psst... try clicking "No" 👀</div>
   <div class="yes-message" id="yes-message">Then my firefly has finally come home. ✨</div>
 </div>
 
 <audio id="bg-music" loop preload="none">
-  <source src="ssvid.net--Anuv-Jain-Arz-Kiya-Hai-Official-Lyrical-Video_128kbps.m4a.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8e70c5d92.mp3" type="audio/mpeg">
+</audio>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -612,9 +619,341 @@ scene.add(constLine);
 
 /* ============================================================
    Camera path & scroll-driven movement (parallax through space)
-   ============================================================ */
-let scrollProgress = 0;
+   ============================================================
+  let scrollProgress = 0;
 let targetScrollProgress = 0;
 
 const cameraPath = [
-  { z: 60, y: 0,  x: 0 
+  { z: 60, y: 0,  x: 0,   rotY: 0 },      // hero
+  { z: 20, y: 4,  x: -6,  rotY: 0.15 },   // loveworld
+  { z: -2, y: -2, x: 5,   rotY: -0.1 },   // memory
+  { z: -26, y: 3, x: -4,  rotY: 0.12 },   // feelings
+  { z: -50, y: 0, x: 0,   rotY: 0 },      // proposal
+  { z: -78, y: -3,x: 0,   rotY: 0 },      // ending
+];
+
+function updateCameraFromProgress(p){
+  const scaled = p * (cameraPath.length - 1);
+  const idx = Math.min(Math.floor(scaled), cameraPath.length - 2);
+  const local = scaled - idx;
+  const a = cameraPath[idx];
+  const b = cameraPath[idx+1];
+  camera.position.x = THREE.MathUtils.lerp(a.x, b.x, local);
+  camera.position.y = THREE.MathUtils.lerp(a.y, b.y, local);
+  camera.position.z = THREE.MathUtils.lerp(a.z, b.z, local);
+  camera.rotation.y = THREE.MathUtils.lerp(a.rotY, b.rotY, local);
+}
+
+ScrollTrigger.create({
+  trigger: document.body,
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate: (self) => {
+    targetScrollProgress = self.progress;
+  }
+});
+
+/* mouse parallax */
+let mouseX = 0, mouseY = 0;
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+window.addEventListener('touchmove', (e) => {
+  if(e.touches[0]){
+    mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+  }
+}, { passive:true });
+
+/* click/tap ripple on hearts (interactive floating hearts) */
+const raycaster = new THREE.Raycaster();
+const pointerVec = new THREE.Vector2();
+function handlePointer(clientX, clientY){
+  pointerVec.x = (clientX/window.innerWidth)*2 - 1;
+  pointerVec.y = -(clientY/window.innerHeight)*2 + 1;
+  raycaster.setFromCamera(pointerVec, camera);
+  const intersects = raycaster.intersectObjects(hearts);
+  if(intersects.length){
+    const h = intersects[0].object;
+    gsap.to(h.scale, { x: h.scale.x*1.6, y: h.scale.y*1.6, z: h.scale.z*1.6, duration:0.35, ease:'back.out(3)', yoyo:true, repeat:1 });
+  }
+}
+window.addEventListener('click', (e) => handlePointer(e.clientX, e.clientY));
+window.addEventListener('touchstart', (e) => {
+  if(e.touches[0]) handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive:true });
+
+/* ---------- Proposal reveal → morph firefly's trail into heart constellation ---------- */
+let constellationRevealed = false;
+function revealConstellation(){
+  if(constellationRevealed) return;
+  constellationRevealed = true;
+  gsap.to(constMat, { opacity: 0.95, duration: 2.2, ease:'power2.out' });
+  gsap.to(lineMat, { opacity: 0.35, duration: 2.2, ease:'power2.out', delay:0.3 });
+}
+
+/* ============================================================
+   Animate loop
+   ============================================================ */
+const clock = new THREE.Clock();
+
+function animate(){
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  // smooth scroll progress
+  scrollProgress += (targetScrollProgress - scrollProgress) * 0.06;
+  updateCameraFromProgress(scrollProgress);
+
+  // mouse parallax offset on top of scroll camera
+  camera.position.x += (mouseX*3 - 0) * 0.0; // handled below via lerp target instead
+  camera.rotation.x = THREE.MathUtils.lerp(camera.rotation.x, -mouseY*0.05, 0.05);
+  camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, -mouseX*0.03, 0.05);
+  camera.lookAt(
+    camera.position.x + Math.sin(camera.rotation.y)*-10,
+    camera.position.y,
+    camera.position.z + Math.cos(camera.rotation.y)*-10
+  );
+
+  // stars drift slowly
+  starsFar.rotation.y = t*0.005;
+  starsMid.rotation.y = t*0.008;
+  starsNear.rotation.y = t*0.012;
+
+  // dust drifting upward gently
+  const dp = dust.geometry.attributes.position.array;
+  for(let i=0;i<dustCount;i++){
+    dp[i*3+1] += dustSpeeds[i]*0.05;
+    if(dp[i*3+1] > 110) dp[i*3+1] = -110;
+  }
+  dust.geometry.attributes.position.needsUpdate = true;
+
+  // hearts float + rotate
+  hearts.forEach(h => {
+    const u = h.userData;
+    h.position.y = u.baseY + Math.sin(t*u.floatSpeed + u.floatOffset)*2.2;
+    h.position.x = u.baseX + Math.sin(t*u.floatSpeed*0.6 + u.floatOffset)*1.4;
+    h.rotation.x += u.rotSpeed*0.01;
+    h.rotation.y += u.rotSpeed*0.015;
+  });
+
+  // firefly wandering path, biased toward camera's current depth
+  const fx = Math.sin(t*0.35)*14 + Math.sin(t*0.12)*6;
+  const fy = Math.sin(t*0.5)*7 + 3;
+  const fz = camera.position.z + 14 + Math.sin(t*0.2)*4;
+  fireflyGroup.position.set(fx, fy, fz);
+  fireflyCore.material.color.setHSL(0.13, 0.9, 0.6 + Math.sin(t*6)*0.15);
+  fireflyGlow.intensity = 3 + Math.sin(t*6)*1.2;
+  halo.scale.setScalar(6 + Math.sin(t*6)*1.2);
+
+  // update trail
+  trailHistory.unshift({x:fx,y:fy,z:fz});
+  if(trailHistory.length > TRAIL_LEN) trailHistory.pop();
+  for(let i=0;i<TRAIL_LEN;i++){
+    const p = trailHistory[i] || trailHistory[trailHistory.length-1] || {x:fx,y:fy,z:fz};
+    trailPos[i*3] = p.x;
+    trailPos[i*3+1] = p.y;
+    trailPos[i*3+2] = p.z;
+  }
+  trail.geometry.attributes.position.needsUpdate = true;
+  trailMat.opacity = 0.5;
+
+  // constellation gentle rotation once revealed
+  if(constellationRevealed){
+    constellation.rotation.z = Math.sin(t*0.15)*0.03;
+    constLine.rotation.z = constellation.rotation.z;
+    constellation.position.z = -50 + Math.sin(t*0.2)*2;
+    constLine.position.z = constellation.position.z;
+  } else {
+    constellation.position.copy(new THREE.Vector3(0,8,cameraPath[4].z - 10));
+    constLine.position.copy(constellation.position);
+  }
+
+  roseLight.intensity = 2 + Math.sin(t*0.7)*0.4;
+  goldLight.intensity = 1.6 + Math.cos(t*0.5)*0.3;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ============================================================
+   GSAP text reveals per section
+   ============================================================ */
+gsap.utils.toArray('.line-reveal').forEach((el, i) => {
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 75%',
+    onEnter: () => gsap.to(el, { opacity:1, y:0, duration:1.1, ease:'power3.out' }),
+    onLeaveBack: () => gsap.to(el, { opacity:0, y:30, duration:0.6 })
+  });
+});
+gsap.utils.toArray('.feel-line').forEach((el) => {
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 78%',
+    onEnter: () => gsap.to(el, { opacity:1, y:0, duration:1.1, ease:'power3.out' }),
+    onLeaveBack: () => gsap.to(el, { opacity:0, y:30, duration:0.6 })
+  });
+});
+
+// memory frame subtle entrance
+gsap.set('.memory-frame', { opacity:0, scale:0.85 });
+ScrollTrigger.create({
+  trigger: '#memory',
+  start: 'top 60%',
+  onEnter: () => gsap.to('.memory-frame', { opacity:1, scale:1, duration:1.4, ease:'power3.out' }),
+  onLeaveBack: () => gsap.to('.memory-frame', { opacity:0, scale:0.85, duration:0.6 })
+});
+
+// ending fade in + reveal constellation as user approaches ending
+gsap.set('#ending-frame', { opacity:0, y:20 });
+ScrollTrigger.create({
+  trigger: '#ending',
+  start: 'top 65%',
+  onEnter: () => {
+    gsap.to('#ending-frame', { opacity:1, y:0, duration:1.6, ease:'power2.out' });
+  },
+  onLeaveBack: () => gsap.to('#ending-frame', { opacity:0, y:20, duration:0.6 })
+});
+
+ScrollTrigger.create({
+  trigger: '#proposal',
+  start: 'top 50%',
+  onEnter: revealConstellation
+});
+
+/* hero entrance */
+gsap.from('#hero .display', { opacity:0, y:40, duration:1.6, ease:'power3.out', delay:0.3 });
+gsap.from('#hero .names', { opacity:0, y:30, duration:1.6, ease:'power3.out', delay:0.7 });
+gsap.from('.eyebrow', { opacity:0, duration:1.6, delay:0.1 });
+
+/* ============================================================
+   Proposal interaction
+   ============================================================ */
+const overlay = document.getElementById('proposal-overlay');
+const openHeartBtn = document.getElementById('open-heart');
+const closeBtn = document.getElementById('close-reveal');
+const ansYes = document.getElementById('ans-yes');
+const ansNo = document.getElementById('ans-no');
+const yesMessage = document.getElementById('yes-message');
+const answerBtns = document.getElementById('answer-btns');
+const prankHint = document.getElementById('prank-hint');
+let dodgeCount = 0;
+
+openHeartBtn.addEventListener('click', () => {
+  overlay.classList.add('active');
+  gsap.to(overlay, { opacity:1, duration:1, ease:'power2.out' });
+  gsap.fromTo('.proposal-question', { scale:0.7, opacity:0 }, { scale:1, opacity:1, duration:1.1, ease:'back.out(1.6)', delay:0.2 });
+  gsap.fromTo('#answer-btns', { opacity:0, y:20 }, { opacity:1, y:0, duration:0.8, delay:0.7 });
+  // reset prank state for a fresh run each time
+  dodgeCount = 0;
+  ansNo.textContent = 'No 🤏';
+  gsap.set(ansNo, { x:0, y:0 });
+  gsap.set(ansYes, { scale:1 });
+  gsap.set(prankHint, { opacity:0 });
+  gsap.set(answerBtns, { opacity:0, y:20 });
+  gsap.set(yesMessage, { opacity:0 });
+  revealConstellation();
+});
+
+function closeOverlay(){
+  gsap.to(overlay, { opacity:0, duration:0.6, onComplete: () => overlay.classList.remove('active') });
+}
+closeBtn.addEventListener('click', closeOverlay);
+
+/* ---------- Cute prank game: "No" runs away, "Yes" grows ---------- */
+const dodgePhrases = [
+  'Nice try 😏', 'Nahi bhaaga na? 🤭', 'Ye button tera nahi sunega 🤏',
+  'Jitna bhagoge, utna hi door 🏃‍♂️', 'Dil se try karo na 🥹',
+  'Bas ek "Yes" bacha hai... 👀', 'Firefly bhi haar maan gaya 😩', 'Okay ye ab bahut zyada ho gaya 😂'
+];
+
+function dodgeNo(){
+  const container = answerBtns.getBoundingClientRect();
+  const btnW = ansNo.offsetWidth;
+  const btnH = ansNo.offsetHeight;
+  // keep it within a reasonable radius so it stays visible near the container
+  const maxX = Math.max(container.width, 260);
+  const maxY = 90;
+  const newX = (Math.random() - 0.5) * maxX * 0.8;
+  const newY = (Math.random() - 0.5) * maxY;
+
+  gsap.to(ansNo, {
+    x: newX, y: newY,
+    duration: 0.4,
+    ease: 'back.out(2)'
+  });
+
+  dodgeCount++;
+  ansNo.textContent = dodgePhrases[Math.min(dodgeCount - 1, dodgePhrases.length - 1)];
+
+  // Yes button grows a little each time, hinting the answer
+  gsap.to(ansYes, { scale: 1 + Math.min(dodgeCount, 6) * 0.06, duration: 0.4, ease: 'back.out(2)' });
+
+  if (dodgeCount === 1) {
+    gsap.to(prankHint, { opacity: 1, duration: 0.6 });
+    prankHint.textContent = 'haha, dekha? bhaag gaya 😆';
+  }
+  if (dodgeCount >= dodgePhrases.length) {
+    prankHint.textContent = 'Chalo Yes daba do ab, please? 🥺❤️';
+  }
+}
+
+// Desktop: dodge before the click even lands
+ansNo.addEventListener('mouseenter', (e) => {
+  if (window.matchMedia('(hover: hover)').matches) dodgeNo();
+});
+// Fallback for click/tap (mobile + safety net)
+ansNo.addEventListener('click', (e) => {
+  e.preventDefault();
+  dodgeNo();
+});
+ansNo.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  dodgeNo();
+}, { passive: false });
+
+ansYes.addEventListener('click', () => {
+  gsap.to(answerBtns, { opacity:0, y:-10, duration:0.5 });
+  gsap.to(yesMessage, { opacity:1, y:0, duration:1.2, delay:0.3, ease:'power2.out' });
+  gsap.to('.proposal-question', { scale:1.08, duration:0.6, ease:'back.out(2)' });
+  // little celebratory heart burst
+  for(let i=0;i<18;i++){
+    const m = new THREE.Mesh(heartGeo, heartMat.clone());
+    m.scale.setScalar(0.4 + Math.random()*0.5);
+    m.position.copy(fireflyGroup.position);
+    scene.add(m);
+    const dir = new THREE.Vector3((Math.random()-0.5)*20, Math.random()*14+4, (Math.random()-0.5)*20);
+    gsap.to(m.position, { x: m.position.x+dir.x, y: m.position.y+dir.y, z: m.position.z+dir.z, duration: 2+Math.random(), ease:'power2.out' });
+    gsap.to(m.material, { opacity:0, duration:2.2, onComplete: () => scene.remove(m) });
+  }
+});
+
+/* ============================================================
+   Music toggle
+   ============================================================ */
+const musicBtn = document.getElementById('sound-toggle');
+const music = document.getElementById('bg-music');
+let musicPlaying = false;
+musicBtn.addEventListener('click', () => {
+  if(!musicPlaying){
+    music.volume = 0.35;
+    music.play().catch(()=>{});
+    musicBtn.textContent = '🔊';
+    musicPlaying = true;
+  } else {
+    music.pause();
+    musicBtn.textContent = '🔇';
+    musicPlaying = false;
+  }
+});
+</script>
+</body>
+</html>
