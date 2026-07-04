@@ -1,972 +1,491 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Mehak 💖 Jugnu – For You</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Quicksand:wght@300;400;500;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Aditya ❤ Jugnu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#07050f;
+    --night2:#120a24;
+    --plum:#2d1b4e;
+    --rose:#ff8fb3;
+    --rose-deep:#ff5c8a;
+    --gold:#ffd28c;
+    --firefly:#ffe9a8;
+    --violet:#b48cff;
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:#f5eef7;
+    font-family:'Playfair Display', serif;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  ::selection{background:rgba(255,143,179,0.3);}
 
-    :root {
-      --plum: #180e28;
-      --violet: #2d1b4e;
-      --rose: #ff8fb3;
-      --rose-deep: #ff5f96;
-      --gold: #ffd699;
-      --cream: #fff5e6;
-    }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
 
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-    }
+  /* Custom cursor */
+  #cursor{
+    position:fixed; top:0; left:0; width:22px; height:22px; border-radius:50%;
+    border:1px solid rgba(255,210,140,0.8);
+    pointer-events:none; z-index:9999; transform:translate(-50%,-50%);
+    transition:width .2s, height .2s, background .2s, border-color .2s;
+    mix-blend-mode:screen;
+  }
+  #cursor.hover{ width:44px; height:44px; background:rgba(255,143,179,0.15); border-color:var(--rose);}
+  @media (max-width:768px){ #cursor{display:none;} body{cursor:auto;} }
 
-    html, body {
-      background: var(--plum);
-      color: var(--cream);
-      font-family: 'Quicksand', sans-serif;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
+  canvas#bg{
+    position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; display:block;
+  }
 
-    ::selection { 
-      background: rgba(255,143,179,0.3); 
-    }
+  .veil{
+    position:fixed; inset:0; background:radial-gradient(ellipse at 50% 30%, rgba(45,27,78,0.15), rgba(7,5,15,0.55) 70%);
+    z-index:1; pointer-events:none;
+  }
 
-    #bg-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0;
-      display: block;
-    }
+  section{
+    position:relative; z-index:2; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:6vh 6vw; text-align:center;
+  }
 
-    .scene {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8vh 6vw;
-      z-index: 2;
-    }
+  /* ---------- HERO ---------- */
+  #hero{ min-height:100vh; }
+  .eyebrow{
+    font-family:'Quicksand', sans-serif; letter-spacing:0.35em; font-size:0.68rem;
+    text-transform:uppercase; color:var(--gold); opacity:0;
+    animation:fadeUp 1.4s ease forwards 0.3s;
+  }
+  .hero-names{
+    font-family:'Dancing Script', cursive; font-weight:700;
+    font-size:clamp(2.6rem, 9vw, 6rem);
+    color:#fff;
+    text-shadow:
+      0 0 20px rgba(255,143,179,0.7),
+      0 0 60px rgba(180,140,255,0.5),
+      0 0 100px rgba(255,210,140,0.3);
+    opacity:0; letter-spacing:0.02em;
+    animation:fadeUp 1.6s ease forwards 0.8s;
+    margin-top:0.4rem;
+  }
+  .hero-sub{
+    font-family:'Playfair Display', serif; font-style:italic; font-weight:500;
+    font-size:clamp(1.3rem, 4vw, 2.1rem);
+    color:var(--rose);
+    margin-top:1.2rem;
+    opacity:0;
+    text-shadow:0 0 30px rgba(255,92,138,0.5);
+    animation:fadeUp 1.6s ease forwards 1.6s;
+  }
+  .hero-line{
+    margin-top:2.2rem; max-width:36rem;
+    font-size:clamp(0.95rem, 2.2vw, 1.15rem);
+    color:rgba(245,238,247,0.75); font-style:italic; font-weight:400;
+    opacity:0; line-height:1.9; letter-spacing:0.01em;
+    animation:fadeUp 1.6s ease forwards 2.4s;
+  }
+  .scroll-hint{
+    position:absolute; bottom:5vh; left:50%; transform:translateX(-50%);
+    font-family:'Quicksand',sans-serif; font-size:0.7rem; letter-spacing:0.25em;
+    color:rgba(255,255,255,0.45); text-transform:uppercase;
+    opacity:0; animation:fadeUp 1.2s ease forwards 3.4s, floatY 3s ease-in-out infinite 3.4s;
+  }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(26px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes floatY{ 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,-8px);} }
 
-    .eyebrow {
-      font-family: 'Quicksand', sans-serif;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      font-size: 0.68rem;
-      color: var(--gold);
-      opacity: 0.75;
-      margin-bottom: 1.4rem;
-      font-weight: 500;
-    }
+  /* ---------- SHARED REVEAL TEXT ---------- */
+  .reveal-line{
+    font-size:clamp(1.3rem, 3.6vw, 2.3rem);
+    font-weight:400; line-height:1.6; max-width:44rem;
+    color:rgba(245,238,247,0.9);
+    opacity:0; transform:translateY(24px) scale(0.98);
+    transition:opacity 1.3s ease, transform 1.3s ease;
+    margin:0.35rem 0;
+  }
+  .reveal-line.glow{ color:var(--gold); font-style:italic; }
+  .reveal-line.visible{ opacity:1; transform:translateY(0) scale(1); }
+  .reveal-line .accent{ color:var(--rose); font-family:'Dancing Script',cursive; font-weight:700; font-size:1.15em; }
 
-    h1, h2, .display {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-      line-height: 1.15;
-    }
+  .section-title{
+    font-family:'Dancing Script', cursive; font-weight:700;
+    font-size:clamp(2rem, 5vw, 3.2rem); color:#fff;
+    text-shadow:0 0 30px rgba(255,143,179,0.5);
+    margin-bottom:2.5rem;
+  }
 
-    .glow-text {
-      text-shadow: 0 0 20px rgba(255,143,179,0.55), 0 0 60px rgba(255,214,153,0.25);
-    }
+  /* ---------- MEMORY CARD ---------- */
+  .memory-card{
+    width:min(90vw, 420px);
+    padding:3rem 2rem;
+    border-radius:28px;
+    background:linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02));
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(18px);
+    box-shadow:0 8px 60px rgba(180,140,255,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+    transform-style:preserve-3d;
+    transition:transform 0.15s ease, box-shadow 0.3s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .memory-card::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(circle at 30% 20%, rgba(255,210,140,0.18), transparent 60%);
+    pointer-events:none;
+  }
+  .memory-date{
+    font-family:'Dancing Script', cursive; font-weight:700; font-size:2.1rem;
+    color:var(--gold); text-shadow:0 0 20px rgba(255,210,140,0.6);
+  }
+  .memory-text{
+    margin-top:1.1rem; font-style:italic; font-size:1.05rem;
+    color:rgba(245,238,247,0.85); line-height:1.7;
+  }
+  .memory-heart{ font-size:1.6rem; margin-top:1rem; display:inline-block; animation:pulseHeart 1.8s ease-in-out infinite; }
+  @keyframes pulseHeart{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
 
-    /* --------- Glass card --------- */
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 28px;
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      box-shadow: 0 80px 60px rgba(255,95,150,0.12), inset 0 1px 0 rgba(255,255,255,0.1);
-      padding: 3rem 2.6rem;
-      max-width: 620px;
-    }
+  /* ---------- GAME ---------- */
+  #gameSection{ overflow:hidden; }
+  #gameArea{
+    position:relative; width:min(92vw, 520px); height:60vh; max-height:520px;
+    border-radius:32px; border:1px solid var(--glass-border);
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    backdrop-filter:blur(10px);
+    overflow:hidden;
+    box-shadow:0 0 60px rgba(255,143,179,0.1);
+  }
+  .game-heart{
+    position:absolute; bottom:-40px; font-size:1.8rem; user-select:none;
+    filter:drop-shadow(0 0 10px rgba(255,143,179,0.8));
+    animation:riseUp linear forwards;
+  }
+  @keyframes riseUp{ to{ transform:translateY(-620px) rotate(20deg); opacity:0.2; } }
+  .game-score{
+    font-family:'Quicksand',sans-serif; font-size:1rem; letter-spacing:0.1em;
+    color:var(--gold); margin-bottom:1rem;
+  }
+  .game-complete-msg{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:2rem; font-style:italic; font-size:1.2rem;
+    background:rgba(7,5,15,0.85); color:var(--rose); opacity:0; pointer-events:none;
+    transition:opacity 0.8s ease; border-radius:32px;
+  }
+  .game-complete-msg.show{ opacity:1; pointer-events:auto; }
 
-    /* --------- HERO --------- */
-    #hero {
-      height: 100vh;
-    }
+  /* ---------- PRANK BUTTONS ---------- */
+  .prank-wrap{
+    position:relative; width:min(90vw, 460px); height:220px;
+    display:flex; align-items:center; justify-content:center; gap:1.5rem;
+  }
+  .btn{
+    font-family:'Quicksand',sans-serif; font-weight:600; letter-spacing:0.04em;
+    padding:0.95rem 2.4rem; border-radius:100px; border:none; cursor:none;
+    font-size:1rem; transition:transform 0.2s ease;
+  }
+  .btn-yes{
+    background:linear-gradient(135deg, var(--rose), var(--gold));
+    color:#2a0a1a; box-shadow:0 6px 30px rgba(255,92,138,0.5);
+  }
+  .btn-yes:hover{ transform:scale(1.06); }
+  .btn-no{
+    background:rgba(255,255,255,0.08); color:#fff; border:1px solid var(--glass-border);
+    position:absolute;
+  }
+  .prank-msg{
+    position:absolute; top:-2.6rem; left:50%; transform:translateX(-50%);
+    font-style:italic; color:var(--gold); font-size:1rem; opacity:0;
+    transition:opacity 0.4s ease; white-space:nowrap;
+  }
+  .prank-msg.show{ opacity:1; }
 
-    #hero .display {
-      font-size: clamp(2.6rem, 8vw, 5.2rem);
-      font-style: italic;
-      color: var(--cream);
-    }
+  /* ---------- PROPOSAL ---------- */
+  #proposalSection{ position:relative; }
+  .open-heart-btn{
+    font-family:'Quicksand',sans-serif; font-weight:600; letter-spacing:0.08em;
+    font-size:1.05rem; padding:1.2rem 3.2rem; border-radius:100px; border:1px solid rgba(255,210,140,0.6);
+    background:rgba(255,143,179,0.08); color:#fff; cursor:none;
+    box-shadow:0 0 40px rgba(255,143,179,0.35);
+    animation:breathe 3s ease-in-out infinite;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .open-heart-btn:hover{ transform:scale(1.05); box-shadow:0 0 70px rgba(255,143,179,0.55); }
+  @keyframes breathe{ 0%,100%{ box-shadow:0 0 30px rgba(255,143,179,0.3);} 50%{ box-shadow:0 0 55px rgba(255,143,179,0.55);} }
 
-    #hero .names {
-      font-size: clamp(1.3rem, 4vw, 2.1rem);
-      margin-top: 1.2rem;
-      color: var(--rose);
-      letter-spacing: 0.02em;
-    }
+  #proposalOverlay{
+    position:fixed; inset:0; z-index:50; background:#000;
+    opacity:0; pointer-events:none; transition:opacity 1.8s ease;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+  }
+  #proposalOverlay.active{ opacity:1; pointer-events:auto; }
+  #heartCanvas{ position:absolute; inset:0; width:100%; height:100%; }
+  .proposal-question{
+    position:relative; z-index:2; font-family:'Dancing Script',cursive; font-weight:700;
+    font-size:clamp(1.8rem, 5.5vw, 3.4rem); color:#fff; text-align:center;
+    text-shadow:0 0 40px rgba(255,143,179,0.8);
+    opacity:0; transition:opacity 1.6s ease; padding:0 5vw;
+  }
+  .proposal-question.show{ opacity:1; }
+  .proposal-buttons{
+    position:relative; z-index:2; margin-top:3rem; display:flex; gap:2rem;
+    opacity:0; transition:opacity 1.6s ease 0.4s;
+  }
+  .proposal-buttons.show{ opacity:1; }
+  .btn-final-yes{
+    font-family:'Quicksand',sans-serif; font-weight:600; font-size:1.1rem;
+    padding:1rem 2.8rem; border-radius:100px; border:none; cursor:none;
+    background:linear-gradient(135deg, var(--rose), var(--gold)); color:#2a0a1a;
+    box-shadow:0 0 40px rgba(255,143,179,0.6);
+  }
+  .btn-final-no{
+    font-family:'Quicksand',sans-serif; font-weight:600; font-size:1.1rem;
+    padding:1rem 2.8rem; border-radius:100px; border:1px solid rgba(255,255,255,0.3); cursor:none;
+    background:transparent; color:#fff; position:relative;
+  }
+  #yesResult{
+    position:relative; z-index:2; text-align:center; opacity:0; transition:opacity 1.4s ease;
+    padding:0 6vw;
+  }
+  #yesResult.show{ opacity:1; }
+  #yesResult .big{
+    font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(2rem,6vw,3.6rem);
+    color:var(--gold); text-shadow:0 0 50px rgba(255,210,140,0.7);
+  }
+  #yesResult .small{
+    margin-top:1.2rem; font-style:italic; color:rgba(255,255,255,0.85); font-size:1.1rem; line-height:1.8;
+  }
 
-    .firefly-word {
-      color: var(--gold);
-      font-style: italic;
-    }
+  /* ---------- FINAL ---------- */
+  #finalSection .section-title{ font-size:clamp(2.2rem, 6vw, 3.8rem); }
+  .final-sub{
+    font-style:italic; font-size:1.15rem; color:rgba(245,238,247,0.8);
+    margin-top:1.4rem; max-width:34rem; line-height:1.9;
+  }
+  .signature{
+    margin-top:3rem; font-family:'Dancing Script',cursive; font-weight:700;
+    font-size:clamp(1.6rem,4vw,2.4rem); color:var(--rose);
+    text-shadow:0 0 30px rgba(255,143,179,0.6);
+  }
 
-    .scroll-cue {
-      position: absolute;
-      bottom: 5vh;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,245,230,0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-    }
+  /* ---------- MUSIC TOGGLE ---------- */
+  #musicToggle{
+    position:fixed; bottom:24px; right:24px; z-index:40;
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(255,255,255,0.08); border:1px solid var(--glass-border);
+    backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center;
+    cursor:none; font-size:1.3rem; transition:transform 0.3s ease, background 0.3s ease;
+  }
+  #musicToggle.playing{ background:rgba(255,143,179,0.18); }
+  #musicToggle:hover{ transform:scale(1.1); }
 
-    .scroll-line {
-      width: 1px; height: 34px;
-      background: linear-gradient(180deg, rgba(255,214,153,0.9), transparent);
-      animation: scrollpulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollpulse {
-      0%, 100% { transform: scaleY(1); opacity: 0.8; }
-      50% { transform: scaleY(0.5); opacity: 0.3; }
-    }
-
-    /* --------- LOVE WORLD --------- */
-    #loveworld {
-      min-height: 130vh;
-      gap: 4.5rem;
-    }
-
-    .line-reveal {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.5rem, 4.4vw, 2.6rem);
-      max-width: 780px;
-      opacity: 0;
-      transform: translateY(30px);
-      color: var(--cream);
-    }
-
-    /* --------- MEMORY --------- */
-    #memory {
-      min-height: 100vh;
-    }
-
-    .memory-frame {
-      position: relative;
-      padding: 3.4rem 3rem;
-      border: 1px solid rgba(255,214,153,0.35);
-      border-radius: 20px;
-      background: radial-gradient(ellipse at center, rgba(255,143,179,0.08), rgba(45,27,78,0.35));
-      backdrop-filter: blur(14px);
-      box-shadow: 0 0 80px rgba(255,214,153,0.15), inset 0 0 40px rgba(255,143,179,0.08);
-    }
-
-    .memory-frame::before, .memory-frame::after {
-      content: '';
-      position: absolute;
-      width: 26px; height: 26px;
-      border: 1.5px solid var(--gold);
-      opacity: 0.8;
-    }
-
-    .memory-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-    .memory-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-    .memory-date {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 5.5vw, 3.1rem);
-      font-style: italic;
-      color: var(--gold);
-      text-shadow: 0 0 30px rgba(255,214,153,0.5);
-    }
-
-    .memory-sub {
-      margin-top: 1rem;
-      font-size: 1.05rem;
-      color: var(--rose);
-      letter-spacing: 0.02em;
-    }
-
-    /* --------- FEELINGS --------- */
-    #feelings {
-      min-height: 110vh;
-      gap: 3rem;
-    }
-
-    .feel-line {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 4.6vw, 2.7rem);
-      font-style: italic;
-      max-width: 700px;
-      opacity: 0;
-    }
-
-    /* --------- PROPOSAL --------- */
-    #proposal {
-      min-height: 100vh;
-    }
-
-    .heart-btn {
-      position: relative;
-      background: linear-gradient(135deg, rgba(255,95,150,0.25), rgba(255,214,153,0.15));
-      border: 1px solid rgba(255,214,153,0.55);
-      color: var(--cream);
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      padding: 1.1rem 2.8rem;
-      border-radius: 60px;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 40px rgba(255,95,150,0.35), 0 0 80px rgba(255,214,153,0.15);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      letter-spacing: 0.02em;
-    }
-
-    .heart-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 60px rgba(255,95,150,0.55), 0 0 110px rgba(255,214,153,0.25);
-    }
-
-    .heart-btn:active { transform: scale(0.97); }
-
-    .proposal-reveal {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      background: radial-gradient(ellipse at center, rgba(45,27,78,0.55), rgba(10,6,18,0.92));
-      opacity: 0;
-      pointer-events: none;
-      padding: 6vw;
-    }
-
-    .proposal-reveal.active {
-      pointer-events: all;
-    }
-
-    .proposal-question {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.8rem, 6vw, 3.4rem);
-      color: var(--cream);
-      text-shadow: 0 0 40px rgba(255,143,179,0.6);
-      max-width: 800px;
-      margin-top: 1rem;
-    }
-
-    .answer-btns {
-      display: flex;
-      gap: 1.2rem;
-      margin-top: 2.6rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .ans-btn {
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.85rem 2.2rem;
-      border-radius: 40px;
-      cursor: pointer;
-      letter-spacing: 0.02em;
-      transition: all 0.3s ease;
-    }
-
-    .ans-yes {
-      background: linear-gradient(135deg, var(--rose-deep), var(--gold));
-      color: #2a1020;
-      border: none;
-      box-shadow: 0 0 40px rgba(255,95,150,0.5);
-    }
-
-    .ans-yes:hover { transform: scale(1.08); }
-
-    .ans-no {
-      background: transparent;
-      border: 1px solid rgba(255,245,230,0.3);
-      color: rgba(255,245,230,0.6);
-    }
-
-    .close-reveal {
-      position: absolute;
-      top: 2.4rem; right: 2.4rem;
-      color: rgba(255,245,230,0.5);
-      font-size: 1.6rem;
-      cursor: pointer;
-      background: none; border: none;
-      line-height: 1;
-    }
-
-    .yes-message {
-      margin-top: 2rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.3rem, 3.6vw, 1.8rem);
-      color: var(--gold);
-      opacity: 0;
-    }
-
-    /* --------- ENDING --------- */
-    #ending {
-      min-height: 100vh;
-    }
-
-    #ending .display {
-      font-size: clamp(2rem, 6.5vw, 3.6rem);
-      font-style: italic;
-    }
-
-    #ending .sig {
-      margin-top: 1.6rem;
-      font-size: clamp(1.1rem, 3vw, 1.5rem);
-      color: var(--rose);
-      letter-spacing: 0.03em;
-    }
-
-    .fade-frame {
-      opacity: 0;
-    }
-
-    .game-area {
-      overflow: hidden;
-    }
-
-    .heart-game {
-      position: absolute;
-      font-size: 24px;
-      cursor: pointer;
-      animation: floatUp 4s linear forwards;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(100px); opacity: 1; }
-      100% { transform: translateY(-300px); opacity: 0; }
-    }
-
-    /* audio toggle */
-    #sound-toggle {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 60;
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: var(--cream);
-      transition: all 0.3s ease;
-    }
-
-    #sound-toggle:hover { background: rgba(255,143,179,0.2); }
-
-    @media (max-width: 640px) {
-      .glass { padding: 2.2rem 1.6rem; border-radius: 22px; }
-      .memory-frame { padding: 2.4rem 1.6rem; }
-      #hero .names { margin-top: 0.9rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    }
-  </style>
+  /* ripple */
+  .ripple{
+    position:fixed; border-radius:50%; pointer-events:none; z-index:9998;
+    border:1px solid rgba(255,210,140,0.7);
+    transform:translate(-50%,-50%);
+    animation:rippleAnim 0.9s ease-out forwards;
+  }
+  @keyframes rippleAnim{ from{ width:0; height:0; opacity:0.9;} to{ width:140px; height:140px; opacity:0; } }
+</style>
 </head>
 <body>
-  <canvas id="bg-canvas"></canvas>
-  <button id="sound-toggle" aria-label="Toggle music">🔊</button>
 
-  <!-- 1. HERO -->
-  <section class="scene" id="hero">
-    <div class="glass">
-      <div class="eyebrow">a firefly found its light</div>
-      <h1 class="display glow-text">I Love You <span style="color:var(--rose-deep);">❤️</span></h1>
-      <div class="names">My Dear Mehak <span class="firefly-word">(Jugnu)</span></div>
-    </div>
-    <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
-  </section>
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+<div id="cursor"></div>
 
-  <!-- 2. LOVE WORLD -->
-  <section class="scene" id="loveworld">
-    <p class="line-reveal" data-line="1">The day I met you, my life became complete.</p>
-    <p class="line-reveal" data-line="2">You are my peace, my happiness, and my everything.</p>
-    <p class="line-reveal" data-line="3">Every moment with you is special to me.</p>
-    <p class="line-reveal" data-line="4">Ha ha pta h aapka reply hoga "Chup raho" Achha theek hai... chup ho jaata hoon!</p>
-    <p class="line-reveal" data-line="5">par dil ko kaise chup karu... woh to sirf aapko hi bolta hai aapke gusse me bhi pyar hi dikhta hai 💖.. Or aapka Reply "Bhappp' hayeee🥰"</p>
-  </section>
+<button id="musicToggle" aria-label="Toggle music">🎵</button>
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8b8a73467.mp3?filename=romantic-piano-ambient-loop-111486.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- 3. MEMORY -->
-  <section class="scene" id="memory">
-    <div class="memory-frame">
-      <div class="memory-date">11 January 2026</div>
-      <div class="memory-sub">The day my heart found you ❤️</div>
-    </div>
-  </section>
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">a love story, told in starlight</div>
+  <div class="hero-names">Aditya ❤ Jugnu</div>
+  <div class="hero-sub">I Love You Mehak</div>
+  <p class="hero-line">Somewhere between silence and heartbeat… I found you.</p>
+  <div class="scroll-hint">scroll gently ↓</div>
+</section>
 
-  <!-- 4. FEELINGS -->
-  <section class="scene" id="feelings">
-    <p class="feel-line" data-line="1">You are the reason behind my smile.</p>
-    <p class="feel-line" data-line="2">I feel lucky to have you in my life.</p>
-  </section>
-
-  <!-- 5. PROPOSAL -->
-  <section class="scene" id="proposal">
-    <div class="glass">
-      <div class="eyebrow">one question, always</div>
-      <h2 class="display" style="font-size:clamp(1.6rem, 4.5vw, 2.4rem); font-style:italic; margin-bottom:1.8rem;">Every star tonight is a little braver because of you.</h2>
-      <button class="heart-btn" id="open-heart">Open My Heart ❤️</button>
-    </div>
-  </section>
-
-  <!-- 6. ENDING -->
-  <section class="scene" id="ending">
-    <div class="fade-frame" id="ending-frame">
-      <div class="eyebrow">always, and after always</div>
-      <h2 class="display glow-text">I will always love you.</h2>
-      <div class="sig">Mehak <span class="firefly-word">(Jugnu)</span> ❤️</div>
-    </div>
-  </section>
-
-  <!-- GAME SECTION -->
-  <section class="scene" id="game">
-    <div class="glass">
-      <div class="eyebrow">a little game for you ❤️</div>
-      <h2 class="display" style="font-size:2rem;">Catch My Love ❤️</h2>
-      <p style="margin: 1rem 0;">Tap the hearts 👇</p>
-      <div id="game-area" style="position:relative; height:300px; width:100%;"></div>
-      <div id="score" style="margin-top:1rem;">Score: 0</div>
-    </div>
-  </section>
-
-  <!-- PROPOSAL REVEAL OVERLAY -->
-  <div class="proposal-reveal" id="proposal-overlay">
-    <button class="close-reveal" id="close-reveal" aria-label="Close">×</button>
-    <div class="proposal-question">Will you stay with me forever? 💍</div>
-    <div class="answer-btns">
-      <button class="ans-btn ans-yes" id="ans-yes">Yes, forever ❤️</button>
-      <button class="ans-btn ans-no" id="ans-no">Ask me softly again</button>
-    </div>
-    <div class="yes-message" id="yes-message">Then my firefly has finally come home. ✨</div>
+<!-- LOVE STORY -->
+<section id="story">
+  <div id="storyLines" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem;">
+    <p class="reveal-line" data-line>Since <span class="accent">11 January 2026</span>…</p>
+    <p class="reveal-line" data-line>My life quietly changed in the most beautiful way.</p>
+    <p class="reveal-line glow" data-line>You became my peace… my happiness… my everything.</p>
+    <p class="reveal-line" data-line>I don't know when this feeling became so deep…</p>
+    <p class="reveal-line" data-line>But now, it feels like my heart belongs to <span class="accent">you</span>.</p>
   </div>
+</section>
 
-  <audio id="bg-music" loop preload="none">
-    <source src="ssvid.net--Anuv-Jain-Arz-Kiya-Hai-Official-Lyrical-Video_128kbps.m4a.mp3" type="audio/mp3">
-  </audio>
+<!-- MEMORY CARD -->
+<section id="memory">
+  <h2 class="section-title">The Beginning</h2>
+  <div class="memory-card" id="memCard">
+    <div class="memory-date">11 January 2026 ❤</div>
+    <p class="memory-text">The day my heart found its home in you.</p>
+    <div class="memory-heart">🔥🦋</div>
+  </div>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+<!-- GAME -->
+<section id="gameSection">
+  <h2 class="section-title">Catch My Love</h2>
+  <div class="game-score">Hearts collected: <span id="scoreVal">0</span> / <span id="scoreTarget">15</span></div>
+  <div id="gameArea">
+    <div class="game-complete-msg" id="gameCompleteMsg">
+      You collected all my love… just like you already hold my heart ❤️
+    </div>
+  </div>
+</section>
 
-    /* ==============================================
-       THREE.JS SCENE - space, particles, firefly, heart constellation
-       ============================================== */
-    const canvas = document.getElementById('bg-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+<!-- PRANK -->
+<section id="prank">
+  <h2 class="section-title">Just One Question…</h2>
+  <p style="font-style:italic; color:rgba(245,238,247,0.75); margin-bottom:2.5rem; max-width:30rem;">Will you smile for me right now? 🥹</p>
+  <div class="prank-wrap">
+    <span class="prank-msg" id="prankMsg"></span>
+    <button class="btn btn-yes" id="prankYes">Yes, always ❤️</button>
+    <button class="btn btn-no" id="prankNo">No</button>
+  </div>
+</section>
 
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x180e28, 0.012);
+<!-- PROPOSAL TRIGGER -->
+<section id="proposalSection">
+  <h2 class="section-title">The Moment</h2>
+  <p style="font-style:italic; color:rgba(245,238,247,0.75); margin-bottom:2.5rem; max-width:28rem;">Some words are easier to show than to say.</p>
+  <button class="open-heart-btn" id="openHeartBtn">Open My Heart ❤️</button>
+</section>
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 3000);
-    camera.position.set(0, 0, 60);
+<!-- FINAL -->
+<section id="finalSection">
+  <h2 class="section-title">Forever Yours</h2>
+  <p class="final-sub">No matter how much you say "chup rho"…<br>my heart will always keep saying… I love you.</p>
+  <div class="signature">Aditya ❤ Jugnu ✨</div>
+</section>
 
-    // Lighting
-    const ambient = new THREE.AmbientLight(0x2d1b4e, 1.2);
-    scene.add(ambient);
-    const roseLight = new THREE.PointLight(0xff5f96, 2.2, 400);
-    roseLight.position.set(30, 20, 40);
-    scene.add(roseLight);
-    const goldLight = new THREE.PointLight(0xffd699, 1.6, 400);
-    goldLight.position.set(-40, -10, 20);
-    scene.add(goldLight);
+<!-- FULLSCREEN PROPOSAL OVERLAY -->
+<div id="proposalOverlay">
+  <canvas id="heartCanvas"></canvas>
+  <div class="proposal-question" id="proposalQuestion">Will you stay with me forever? 💍</div>
+  <div class="proposal-buttons" id="proposalButtons">
+    <button class="btn-final-yes" id="finalYes">YES ❤️</button>
+    <button class="btn-final-no" id="finalNo">NO 😒</button>
+  </div>
+  <div id="yesResult">
+    <div class="big">You just became my forever. 💍✨</div>
+    <div class="small">Every star tonight knows your name, Jugnu.<br>My heart is yours — today, tomorrow, always.</div>
+  </div>
+</div>
 
-    /* ----- Starfield ----- */
-    function makeStars(count, spread, size, color, opacity) {
-      const geo = new THREE.BufferGeometry();
-      const positions = new Float32Array(count * 3);
-      for(let i=0; i<count*3; i+=3){
-        positions[i] = (Math.random() - 0.5) * spread;
-        positions[i+1] = (Math.random() - 0.5) * spread;
-        positions[i+2] = (Math.random() - 0.5) * spread - 100;
-      }
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const mat = new THREE.PointsMaterial({
-        color: color, size: size, transparent: true, opacity: opacity,
-        depthWrite: false, blending: THREE.AdditiveBlending
-      });
-      return new THREE.Points(geo, mat);
-    }
-    const starsFar = makeStars(2200, 900, 0.9, 0xfff5e6, 0.5);
-    const starsMid = makeStars(700, 500, 1.6, 0xffd699, 0.7);
-    const starsNear = makeStars(200, 260, 2.4, 0xff8fb3, 0.85);
-    scene.add(starsFar, starsMid, starsNear);
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============ CURSOR ============ */
+const cursor = document.getElementById('cursor');
+window.addEventListener('mousemove', e=>{
+  cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+});
+document.querySelectorAll('button, a').forEach(el=>{
+  el.addEventListener('mouseenter', ()=>cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', ()=>cursor.classList.remove('hover'));
+});
 
-    /* ----- Floating glow particles (light dust) ----- */
-    const dustGeo = new THREE.BufferGeometry();
-    const dustCount = 500;
-    const dustPos = new Float32Array(dustCount * 3);
-    const dustSpeeds = [];
-    for(let i=0; i<dustCount; i++){
-      dustPos[i*3] = (Math.random() - 0.5) * 220;
-      dustPos[i*3+1] = (Math.random() - 0.5) * 220;
-      dustPos[i*3+2] = (Math.random() - 0.5) * 400 - 50;
-      dustSpeeds.push(0.02 + Math.random() * 0.05);
-    }
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-    const dustMat = new THREE.PointsMaterial({
-      color: 0xffe0c2, size: 1.1, transparent: true, opacity: 0.5,
-      blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const dust = new THREE.Points(dustGeo, dustMat);
-    scene.add(dust);
+/* ============ CLICK RIPPLE ============ */
+window.addEventListener('click', e=>{
+  const r = document.createElement('div');
+  r.className='ripple'; r.style.left=e.clientX+'px'; r.style.top=e.clientY+'px';
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(), 900);
+});
 
-    /* ----- Floating 3D hearts ----- */
-    function heartShape() {
-      const shape = new THREE.Shape();
-      shape.moveTo(0, 0.5);
-      shape.bezierCurveTo(-1.6, 0.55, -1.5, -0.2, -1, -0.7);
-      shape.bezierCurveTo(-0.6, -1.1, -0.2, -1.3, 0, -1.6);
-      shape.bezierCurveTo(0.2, -1.3, 0.6, -1.1, 1, -0.7);
-      shape.bezierCurveTo(1.5, -0.2, 1.6, 0.55, 0, 0.5);
-      return shape;
-    }
-    const heartGeo = new THREE.ExtrudeGeometry(heartShape(), {
-      depth: 0.35, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.08,
-      bevelSegments: 3, curveSegments: 12
-    });
-    heartGeo.scale(0.5, 0.5, 0.5);
+/* ============ MUSIC ============ */
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicToggle');
+music.volume = 0;
+let musicPlaying = false;
+function fadeInMusic(){
+  music.play().catch(()=>{});
+  let v = 0;
+  const iv = setInterval(()=>{
+    v += 0.02;
+    if(v>=0.35){ v=0.35; clearInterval(iv); }
+    music.volume = v;
+  }, 150);
+}
+musicBtn.addEventListener('click', ()=>{
+  if(!musicPlaying){ fadeInMusic(); musicPlaying=true; musicBtn.classList.add('playing'); musicBtn.textContent='🎶'; }
+  else{ music.pause(); musicPlaying=false; musicBtn.classList.remove('playing'); musicBtn.textContent='🎵'; }
+});
 
-    const heartMat = new THREE.MeshStandardMaterial({
-      color: 0xff5f96, emissive: 0xff5f96, emissiveIntensity: 0.55,
-      metalness: 0.3, roughness: 0.35, transparent: true, opacity: 0.92
-    });
+/* ============ THREE.JS BACKGROUND ============ */
+const canvas = document.getElementById('bg');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-    const hearts = [];
-    const HEART_COUNT = 26;
-    for(let i=0; i<HEART_COUNT; i++){
-      const m = new THREE.Mesh(heartGeo, heartMat.clone());
-      m.material.color.setHSL(0.95, 0.9 + Math.random()*0.1, 0.5 + Math.random()*0.1);
-      const scale = 0.5 + Math.random()*1.1;
-      m.scale.setScalar(scale);
-      m.position.set(
-        (Math.random() - 0.5) * 90,
-        (Math.random() - 0.5) * 70,
-        (Math.random() - 0.5) * 180 - 20
-      );
-      m.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
-      m.userData = {
-        baseY: m.position.y,
-        baseX: m.position.x,
-        floatSpeed: 0.3 + Math.random()*0.5,
-        floatOffset: Math.random()*Math.PI*2,
-        rotSpeed: (Math.random() - 0.5) * 0.25
-      };
-      hearts.push(m);
-      scene.add(m);
-    }
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 2000);
+camera.position.z = 60;
 
-    /* ----- The Firefly (Jugnu) signature element ----- */
-    const fireflyGroup = new THREE.Group();
-    const fireflyCore = new THREE.Mesh(
-      new THREE.SphereGeometry(0.5, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0xfff2cc })
-    );
-    fireflyGroup.add(fireflyCore);
-    const fireflyGlow = new THREE.PointLight(0xfffa8, 3.5, 30);
-    fireflyGroup.add(fireflyGlow);
+// Starfield
+const starGeo = new THREE.BufferGeometry();
+const STAR_COUNT = 2200;
+const starPos = new Float32Array(STAR_COUNT*3);
+const starCol = new Float32Array(STAR_COUNT*3);
+for(let i=0;i<STAR_COUNT;i++){
+  starPos[i*3] = (Math.random()-0.5)*900;
+  starPos[i*3+1] = (Math.random()-0.5)*900;
+  starPos[i*3+2] = (Math.random()-0.5)*900 - 200;
+  const palette = [[1,0.87,0.75],[1,0.7,0.82],[0.78,0.62,1],[1,1,1]];
+  const c = palette[Math.floor(Math.random()*palette.length)];
+  starCol[i*3]=c[0]; starCol[i*3+1]=c[1]; starCol[i*3+2]=c[2];
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
+starGeo.setAttribute('color', new THREE.BufferAttribute(starCol,3));
+const starMat = new THREE.PointsMaterial({size:1.6, vertexColors:true, transparent:true, opacity:0.85, sizeAttenuation:true});
+const stars = new THREE.Points(starGeo, starMat);
+scene.add(stars);
 
-    // soft sprite halo
-    const haloCanvas = document.createElement('canvas');
-    haloCanvas.width = 128; haloCanvas.height = 128;
-    const hctx = haloCanvas.getContext('2d');
-    const grad = hctx.createRadialGradient(64,64,0,64,64,64);
-    grad.addColorStop(0, 'rgba(255,240,200,0.9)');
-    grad.addColorStop(0.4, 'rgba(255,180,200,0.4)');
-    grad.addColorStop(1, 'rgba(0,128,128,0)');
-    hctx.fillStyle = grad; hctx.fillRect(0,0,128,128);
-    const haloTex = new THREE.CanvasTexture(haloCanvas);
-    const haloMat = new THREE.SpriteMaterial({
-      map: haloTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const halo = new THREE.Sprite(haloMat);
-    halo.scale.set(6,6,1);
-    fireflyGroup.add(halo);
-    fireflyGroup.position.set(0,0,20);
-    scene.add(fireflyGroup);
+// Nebula haze via large soft sprites
+function makeGlowTexture(color){
+  const size=128;
+  const c = document.createElement('canvas'); c.width=c.height=size;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
+  g.addColorStop(0, color+ ',0.9)'); g.addColorStop(1, color+',0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,size,size);
+  return new THREE.CanvasTexture(c);
+}
+const glowTexRose = makeGlowTexture('rgba(255,120,170');
+const glowTexViolet = makeGlowTexture('rgba(150,110,255');
+const glowTexGold = makeGlowTexture('rgba(255,210,140');
 
-    // Firefly trail (glowing dust it leaves behind)
-    const TRAIL_LEN = 60;
-    const trailGeo = new THREE.BufferGeometry();
-    const trailPos = new Float32Array(TRAIL_LEN * 3);
-    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
-    const trailMat = new THREE.PointsMaterial({
-      color: 0xffe0a0, size: 0.9, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const trail = new THREE.Points(trailGeo, trailMat);
-    scene.add(trail);
-    const trailHistory = [];
+const nebulaGroup = new THREE.Group();
+for(let i=0;i<10;i++){
+  const tex = [glowTexRose, glowTexViolet, glowTexGold][i%3];
+  const mat = new THREE.SpriteMaterial({map:tex, transparent:true, opacity:0.10, depthWrite:false});
+  const spr = new THREE.Sprite(mat);
+  spr.scale.set(260+Math.random()*220, 260+Math.random()*220, 1);
+  spr.position.set((Math.random()-0.5)*500, (Math.random()-0.5)*300, -150-Math.random()*250);
+  nebulaGroup.add(spr);
+}
+scene.add(nebulaGroup);
 
-    /* ----- Heart constellation (revealed at proposal) ----- */
-    function heartPoints(N) {
-      const pts = [];
-      for(let i=0; i<N; i++){
-        const t = (i/N)*Math.PI*2;
-        const x = 16 * Math.pow(Math.sin(t), 3);
-        const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-        pts.push(new THREE.Vector3(x*0.9, y*0.9, 0));
-      }
-      return pts;
-    }
-    const heartPoints80 = heartPoints(80);
-    const constGeo = new THREE.BufferGeometry().setFromPoints(heartPoints80);
-    const constMat = new THREE.PointsMaterial({
-      color: 0xffd699, size: 1.6, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const constellation = new THREE.Points(constGeo, constMat);
-    constellation.position.set(0, 8, -10);
-    scene.add(constellation);
-
-    // connecting lines for constellation
-    const lineGeo = new THREE.BufferGeometry().setFromPoints([...heartPoints80, heartPoints80[0]]);
-    const lineMat = new THREE.LineBasicMaterial({ color: 0xff8fb3, transparent: true, opacity: 0 });
-    const constellationLine = new THREE.Line(lineGeo, lineMat);
-    constellationLine.position.copy(constellation.position);
-    scene.add(constellationLine);
-
-
-    /* ==============================================
-       Camera path & scroll-driven movement (parallax through space)
-       ============================================== */
-    let scrollProgress = 0;
-    let targetScrollProgress = 0;
-
-    const cameraPath = [
-      { z: 60, y: 0, x: 0, rotY: 0 }, // hero
-      { z: 20, y: 4, x: 6, rotY: 0.15 }, // loveworld
-      { z: -2, y: -2, x: 5, rotY: -0.1 }, // memory
-      { z: -26, y: 3, x: -4, rotY: 0.12 }, // feelings
-      { z: -50, y: 9, x: 0, rotY: 0 }, // proposal
-      { z: -78, y: -3, x: 0, rotY: 0 } // ending
-    ];
-
-    function updateCameraFromProgress(p) {
-      const scaled = p * (cameraPath.length - 1);
-      const idx = Math.min(Math.floor(scaled), cameraPath.length - 2);
-      const local = scaled - idx;
-      const a = cameraPath[idx];
-      const b = cameraPath[idx+1];
-      camera.position.z = THREE.MathUtils.lerp(a.z, b.z, local);
-      camera.position.y = THREE.MathUtils.lerp(a.y, b.y, local);
-      camera.position.x = THREE.MathUtils.lerp(a.x, b.x, local);
-      camera.rotation.y = THREE.MathUtils.lerp(a.rotY, b.rotY, local);
-    }
-
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        targetScrollProgress = self.progress;
-      }
-    });
-
-    /* mouse parallax */
-    let mouseX = 0, mouseY = 0;
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-    window.addEventListener('touchmove', (e) => {
-      if(e.touches.length > 0){
-        mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
-      }
-    }, { passive: true });
-
-    /* click/tap ripple on hearts */
-    const raycaster = new THREE.Raycaster();
-    const pointerVec = new THREE.Vector2();
-    function handlePointer(clientX, clientY) {
-      pointerVec.x = (clientX / window.innerWidth) * 2 - 1;
-      pointerVec.y = -(clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(pointerVec, camera);
-      const intersects = raycaster.intersectObjects(hearts);
-      if(intersects.length > 0){
-        const h = intersects[0].object;
-        gsap.to(h.scale, { x: h.scale.x * 1.6, y: h.scale.y * 1.6, z: h.scale.z * 1.6, duration: 0.35, ease: 'back.out(3)', yoyo: true, repeat: 1 });
-      }
-    }
-    window.addEventListener('click', (e) => { handlePointer(e.clientX, e.clientY); });
-    window.addEventListener('touchstart', (e) => { if(e.touches.length > 0) handlePointer(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-
-
-    /* ----- Proposal reveal -> morph firefly's trail into heart constellation ----- */
-    let constellationRevealed = false;
-    function revealConstellation() {
-      if(constellationRevealed) return;
-      constellationRevealed = true;
-      gsap.to(constMat, { opacity: 0.95, duration: 2.2, ease: 'power2.out' });
-      gsap.to(lineMat, { opacity: 0.35, duration: 2.2, ease: 'power2.out', delay: 0.3 });
-      gsap.to(constellation.position, { z: -8, duration: 3, ease: 'power2.out' });
-    }
-
-    /* ==============================================
-       Animate loop
-       ============================================== */
-    const clock = new THREE.Clock();
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-
-      // smooth scroll progress
-      scrollProgress += (targetScrollProgress - scrollProgress) * 0.06;
-      updateCameraFromProgress(scrollProgress);
-
-      // mouse parallax offset
-      camera.position.x = THREE.MathUtils.lerp(camera.position.x, camera.position.x + mouseX*0.05, 0.05);
-      camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, -mouseX*0.03, 0.05);
-      camera.lookAt(camera.position.x + THREE.MathUtils.lerp(0, mouseX*3, 0.05), camera.position.y + Math.sin(camera.rotation.y)*-10, camera.position.z + Math.cos(camera.rotation.y)*-10);
-
-      // stars drift slowly
-      starsFar.rotation.y = t * 0.005;
-      starsMid.rotation.y = t * 0.008;
-      starsNear.rotation.y = t * 0.012;
-
-      // dust drifting upward gently
-      const dp = dust.geometry.attributes.position.array;
-      for(let i=0; i<dustCount; i++){
-        dp[i*3+1] += dustSpeeds[i]*0.05;
-        if(dp[i*3+1] > 110) dp[i*3+1] = -110;
-      }
-      dust.geometry.attributes.position.needsUpdate = true;
-
-      // hearts float + rotate
-      hearts.forEach(h => {
-        const u = h.userData;
-        h.position.y = u.baseY + Math.sin(t * u.floatSpeed + u.floatOffset)*2.2;
-        h.position.x = u.baseX + Math.sin(t * u.floatSpeed * 0.6 + u.floatOffset)*1.4;
-        h.rotation.x += u.rotSpeed*0.01;
-        h.rotation.y += u.rotSpeed*0.015;
-      });
-
-      // firefly wandering path
-      const fx = Math.sin(t*0.35)*14 + Math.sin(t*0.12)*6;
-      const fy = Math.cos(t*0.5)*7 + 3;
-      const fz = camera.position.z + 14 + Math.sin(t*0.2)*4;
-      fireflyGroup.position.set(fx, fy, fz);
-      fireflyCore.material.color.setHSL(0.13, 0.9, 0.6 + Math.sin(t*6)*0.15);
-      fireflyGlow.intensity = 3 + Math.sin(t*6)*1.2;
-      halo.scale.setScalar(6 + Math.sin(t*6)*1.2);
-
-      // update trail
-      trailHistory.unshift({x:fx, y:fy, z:fz});
-      if(trailHistory.length > TRAIL_LEN) trailHistory.pop();
-      const tp = trail.geometry.attributes.position.array;
-      for(let i=0; i<TRAIL_LEN; i++){
-        const p = trailHistory[i] || trailHistory[trailHistory.length-1] || {x:fx,y:fy,z:fz};
-        tp[i*3] = p.x;
-        tp[i*3+1] = p.y;
-        tp[i*3+2] = p.z;
-      }
-      trail.geometry.attributes.position.needsUpdate = true;
-      trailMat.opacity = 0.5;
-
-      // constellation rotation
-      if(constellationRevealed){
-        constellation.rotation.z = Math.sin(t*0.15)*0.03;
-        constellation.position.z = -50 + Math.sin(t*0.2)*2;
-        constellationLine.rotation.z = constellation.rotation.z;
-        constellationLine.position.z = constellation.position.z;
-      } else {
-        constellationLine.position.copy(constellation.position);
-      }
-
-      roseLight.intensity = 2 + Math.sin(t*0.7)*0.4;
-      goldLight.intensity = 1.6 + Math.cos(t*0.5)*0.3;
-
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    /* ==============================================
-       GSAP text reveals per section
-       ============================================== */
-    gsap.utils.toArray('.line-reveal').forEach((el, i) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 75%',
-        onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }),
-        onLeaveBack: () => gsap.to(el, { opacity: 0, y: 30, duration: 0.6 })
-      });
-    });
-
-    // memory frame subtle entrance
-    gsap.set('.memory-frame', { opacity: 0, scale: 0.85 });
-    ScrollTrigger.create({
-      trigger: '#memory',
-      start: 'top 60%',
-      onEnter: () => gsap.to('.memory-frame', { opacity: 1, scale: 1, duration: 1.4, ease: 'power3.out' }),
-      onLeaveBack: () => gsap.to('.memory-frame', { opacity: 0, scale: 0.85, duration: 0.6 })
-    });
-
-    // ending fade in
-    gsap.set('#ending-frame', { opacity: 0, y: 20 });
-    ScrollTrigger.create({
-      trigger: '#ending',
-      start: 'top 65%',
-      onEnter: () => {
-        gsap.to('#ending-frame', { opacity: 1, y: 0, duration: 1.6, ease: 'power2.out' });
-      },
-      onLeaveBack: () => {
-        gsap.to('#ending-frame', { opacity: 0, y: 20, duration: 0.6 });
-      }
-    });
-
-    ScrollTrigger.create({
-      trigger: '#proposal',
-      start: 'top 50%',
-      onEnter: revealConstellation
-    });
-
-    /* hero entrance */
-    gsap.from('#hero .display', { opacity: 0, y: 40, duration: 1.6, ease: 'power3.out', delay: 0.3 });
-    gsap.from('#hero .names', { opacity: 0, y: 30, duration: 1.6, ease: 'power3.out', delay: 0.7 });
-    gsap.from('#hero .eyebrow', { opacity: 0, duration: 1.6, delay: 0.1 });
-
-
-    /* ==============================================
-       Proposal interaction
-       ============================================== */
-    const overlay = document.getElementById('proposal-overlay');
-    const openHeartBtn = document.getElementById('open-heart');
-    const closeBtn = document.getElementById('close-reveal');
-    const ansYes = document.getElementById('ans-yes');
-    const ansNo = document.getElementById('ans-no');
-    const yesMessage = document.getElementById('yes-message');
-    const answerBtns = document.getElementById('answer-btns');
-
-    openHeartBtn.addEventListener('click', () => {
-      overlay.classList.add('active');
-      gsap.to(overlay, { opacity: 1, duration: 1, ease: 'power2.out' });
-      gsap.to('.proposal-question', { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.6)', delay: 0.2 });
-      gsap.to('#answer-btns', { opacity: 1, y: 0, duration: 1, delay: 0.4 });
-    });
-
-    function closeOverlay() {
-      gsap.to(overlay, { opacity: 0, duration: 0.6, onComplete: () => {
-        overlay.classList.remove('active');
-      }});
-    }
-    closeBtn.addEventListener('click', closeOverlay);
-
-    let noClickCount = 0;
-    ansNo.addEventListener('click', () => {
-      noClickCount++;
-      const phrases = [
-        "Ask me softly again, Please think again? 🥺",
-        "My heart is waiting 💔",
-        "Just one little 'yes'..."
-      ];
-      ansNo.innerText = phrases[Math.min(noClickCount, phrases.length - 1)];
-      gsap.to(ansNo, { x: (Math.random() - 0.5) * 40, y: (Math.random() - 0.5) * 40, duration: 0.3, ease: 'power2.out' });
-    });
-
-    ansYes.addEventListener('click', () => {
-      gsap.to(answerBtns, { opacity: 0, y: -10, duration: 0.5 });
-      gsap.to(yesMessage, { opacity: 1, y: 0, duration: 1.2, delay: 0.3 });
-
-      // celebratory heart burst
-      for(let i=0; i<18; i++){
-        const m = new THREE.Mesh(heartGeo, heartMat.clone());
-        m.scale.setScalar(0.4 + Math.random()*0.5);
-        m.position.copy(fireflyGroup.position);
-        scene.add(m);
-        const dir = new THREE.Vector3((Math.random() - 0.5)*20, Math.random()*14 + 4, (Math.random() - 0.5)*20);
-        gsap.to(m.position, {
-          x: m.position.x + dir.x,
-          y: m.position.y + dir.y,
-          z: m.position.z + dir.z,
-          duration: 2 + Math.random(),
-          ease: 'power2.out'
-        });
-        gsap.to(m.material, { opacity: 0, duration: 2.2, onComplete: () => scene.remove(m) });
-      }
-    });
-
-    /* ==============================================
-       Music toggle
-       ============================================== */
-    const musicBtn = document.getElementById('sound-toggle');
-    const music = document.getElementById('bg-music');
-    let musicPlaying = false;
-    musicBtn.addEventListener('click', () => {
-      if(!musicPlaying){
-        music.volume = 0.35;
-        music.play().catch(() => {});
-        musicBtn.textContent = '🔊';
-        musicPlaying = true;
-      } else {
-        music.pause();
-        musicBtn.textContent = '🔇';
-        musicPlaying = false;
-      }
-    });
-
-    /* ==============================================
-       Cute Love Game
-       ============================================== */
-    let score = 0;
-    const gameArea = document.getElementById('game-area');
-    const scoreDisplay = document.getElementById('score');
-
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-game');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 90 + "%";
-      heart.style.top = "100%";
-
-      heart.onclick = () => {
-        score++;
-        scoreDisplay.innerText = "Score: " + score;
-        heart.remove();
-
-        if(score === 10){
-          alert("Jugnu 💖 You caught all my love! ~ Aditya ❤️");
-        }
-      };
-
-      gameArea.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    }
-
-    setInterval(createHeart, 800);
-  </script>
-</body>
-</html>
+// Fireflies (glowing points with individual drift)
+const FLY_COUNT = 60;
+const flyTex = makeGlowTexture('rgba(255,232,168');
+const flies = [];
+const flyGroup = new THREE.Group();
+for(let i=0;i<FLY_COUNT;i++){
+  const mat = new THREE.SpriteMaterial({map:flyTex, transparent:true, opacity:0.9, depthWrite:false, blending:THREE.AdditiveBlending});
+  const spr = new THREE.Sprite
